@@ -10,14 +10,20 @@ using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Schema;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using System.Linq;
+using Microsoft.Bot.Builder.AI.QnA;
 
 namespace Microsoft.BotBuilderSamples.Bots
 {
     public class DialogAndWelcomeBot<T> : DialogBot<T> where T : Dialog
     {
+        public QnAMaker FAQBotQnA { get; private set; }
+
         public DialogAndWelcomeBot(ConversationState conversationState, UserState userState, T dialog, ILogger<DialogBot<T>> logger)
             : base(conversationState, userState, dialog, logger)
         {
+            // connects to QnA Maker endpoint for each turn
+            FAQBotQnA = new QnAMaker(endpoint);
         }
 
         protected override async Task OnMembersAddedAsync(IList<ChannelAccount> membersAdded, ITurnContext<IConversationUpdateActivity> turnContext, CancellationToken cancellationToken)
