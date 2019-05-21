@@ -39,9 +39,6 @@ namespace Microsoft.BotBuilderSamples
             // Create the Bot Framework Adapter.
             services.AddSingleton<IBotFrameworkHttpAdapter, BotFrameworkHttpAdapter>();
 
-            // Create the bot as a transient. In this case the ASP Controller is expecting an IBot.
-            services.AddTransient<IBot, EchoBot>();
-
             // Create QnAMaker endpoint as a singleton
             services.AddSingleton(new QnAMakerEndpoint
             {
@@ -49,6 +46,9 @@ namespace Microsoft.BotBuilderSamples
                 EndpointKey = Configuration.GetValue<string>($"QnAAuthKey"),
                 Host = Configuration.GetValue<string>($"QnAEndpointHostName")
             });
+
+            // Create the bot as a transient. In this case the ASP Controller is expecting an IBot.
+            services.AddTransient<IBot, EchoBot>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
