@@ -10,7 +10,6 @@ using Microsoft.Bot.Connector.Authentication;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Bot.Builder.AI.QnA;
-using Microsoft.Extensions.Configuration;
 using Microsoft.BotBuilderSamples.Bots;
 
 namespace Microsoft.BotBuilderSamples
