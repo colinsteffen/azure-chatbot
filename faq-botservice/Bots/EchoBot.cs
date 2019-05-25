@@ -9,6 +9,7 @@ using Microsoft.Bot.Schema;
 using System.Linq;
 using Microsoft.Bot.Builder.AI.QnA;
 using EchoBot;
+using Microsoft.Extensions.Logging;
 
 namespace Microsoft.BotBuilderSamples.Bots
 {
@@ -16,7 +17,7 @@ namespace Microsoft.BotBuilderSamples.Bots
     {
         private IBotServices _botServices;
 
-        public EchoBot(IBotServices botServices)
+        public EchoBot(IBotServices botServices, ILogger<EchoBot> logger)
         {
             _botServices = botServices;
         }
