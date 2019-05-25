@@ -8,24 +8,21 @@ using Microsoft.Bot.Builder;
 using Microsoft.Bot.Schema;
 using System.Linq;
 using Microsoft.Bot.Builder.AI.QnA;
+using EchoBot;
 
 namespace Microsoft.BotBuilderSamples.Bots
 {
     public class EchoBot : ActivityHandler
     {
-        public QnAMaker EchoBotQnA { get; private set; }
+        private IBotServices _botServices;
 
-        public EchoBot(QnAMakerEndpoint endpoint)
+        public EchoBot(IBotServices botServices)
         {
-            // connects to QnA Maker endpoint for each turn
-            EchoBotQnA = new QnAMaker(endpoint);
+            _botServices = botServices;
         }
 
         protected override async Task OnMessageActivityAsync(ITurnContext<IMessageActivity> turnContext, CancellationToken cancellationToken)
         {
-            // First send the user input to your QnA Maker knowledgebase
-            await AccessQnAMaker(turnContext, cancellationToken);
-
             await turnContext.SendActivityAsync(MessageFactory.Text($"Echo: {turnContext.Activity.Text}"), cancellationToken);
         }
 
@@ -37,19 +34,6 @@ namespace Microsoft.BotBuilderSamples.Bots
                 {
                     await turnContext.SendActivityAsync(MessageFactory.Text($"Hello and welcome!"), cancellationToken);
                 }
-            }
-        }
-
-        private async Task AccessQnAMaker(ITurnContext<IMessageActivity> turnContext, CancellationToken cancellationToken)
-        {
-            var results = await EchoBotQnA.GetAnswersAsync(turnContext);
-            if (results.Any())
-            {
-                await turnContext.SendActivityAsync(MessageFactory.Text("QnA Maker Returned: " + results.First().Answer), cancellationToken);
-            }
-            else
-            {
-                await turnContext.SendActivityAsync(MessageFactory.Text("Sorry, could not find an answer in the Q and A system."), cancellationToken);
             }
         }
     }
