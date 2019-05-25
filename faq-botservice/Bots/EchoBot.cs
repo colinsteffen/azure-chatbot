@@ -15,16 +15,25 @@ namespace Microsoft.BotBuilderSamples.Bots
 {
     public class EchoBot : ActivityHandler
     {
+        private ILogger<EchoBot> _logger;
         private IBotServices _botServices;
 
         public EchoBot(IBotServices botServices, ILogger<EchoBot> logger)
         {
+            _logger = logger;
             _botServices = botServices;
         }
 
         protected override async Task OnMessageActivityAsync(ITurnContext<IMessageActivity> turnContext, CancellationToken cancellationToken)
         {
-            await turnContext.SendActivityAsync(MessageFactory.Text($"Echo: {turnContext.Activity.Text}"), cancellationToken);
+            // First, we use the dispatch model to determine which cognitive service (LUIS or QnA) to use.
+            var recognizerResult = await _botServices.Dispatch.RecognizeAsync(turnContext, cancellationToken);
+
+            // Top intent tell us which cognitive service to use.
+            var topIntent = recognizerResult.GetTopScoringIntent();
+
+            // Next, we call the dispatcher with the top intent.
+            await DispatchToTopIntentAsync(turnContext, topIntent.intent, recognizerResult, cancellationToken);
         }
 
         protected override async Task OnMembersAddedAsync(IList<ChannelAccount> membersAdded, ITurnContext<IConversationUpdateActivity> turnContext, CancellationToken cancellationToken)
@@ -33,8 +42,27 @@ namespace Microsoft.BotBuilderSamples.Bots
             {
                 if (member.Id != turnContext.Activity.Recipient.Id)
                 {
-                    await turnContext.SendActivityAsync(MessageFactory.Text($"Hello and welcome!"), cancellationToken);
+                    await turnContext.SendActivityAsync(MessageFactory.Text($"Willkommen zum Bot der FH Bielefeld!"), cancellationToken);
                 }
+            }
+        }
+
+        private async Task DispatchToTopIntentAsync(ITurnContext<IMessageActivity> turnContext, string intent, RecognizerResult recognizerResult, CancellationToken cancellationToken)
+        {
+            switch (intent)
+            {
+                case "getEmail":
+                    await turnContext.SendActivityAsync(MessageFactory.Text($"GetEmail"), cancellationToken);
+                    //await ProcessWeatherAsync(turnContext, recognizerResult.Properties["luisResult"] as LuisResult, cancellationToken);
+                    break;
+                case "getQnA":
+                    await turnContext.SendActivityAsync(MessageFactory.Text($"getQnA"), cancellationToken);
+                    //await ProcessWeatherAsync(turnContext, recognizerResult.Properties["luisResult"] as LuisResult, cancellationToken);
+                    break;
+                default:
+                    _logger.LogInformation($"Dispatch unrecognized intent: {intent}.");
+                    await turnContext.SendActivityAsync(MessageFactory.Text($"Dispatch unrecognized intent: {intent}."), cancellationToken);
+                    break;
             }
         }
     }
