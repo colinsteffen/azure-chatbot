@@ -10,6 +10,7 @@ using System.Linq;
 using Microsoft.Bot.Builder.AI.QnA;
 using EchoBot;
 using Microsoft.Extensions.Logging;
+using Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime.Models;
 
 namespace Microsoft.BotBuilderSamples.Bots
 {
@@ -53,7 +54,7 @@ namespace Microsoft.BotBuilderSamples.Bots
             {
                 case "getEmail":
                     await turnContext.SendActivityAsync(MessageFactory.Text($"GetEmail"), cancellationToken);
-                    //await ProcessWeatherAsync(turnContext, recognizerResult.Properties["luisResult"] as LuisResult, cancellationToken);
+                    await ProcessGetEmailAsync(turnContext, recognizerResult.Properties["luisResult"] as LuisResult, cancellationToken);
                     break;
                 case "getQnA":
                     await turnContext.SendActivityAsync(MessageFactory.Text($"getQnA"), cancellationToken);
@@ -78,6 +79,21 @@ namespace Microsoft.BotBuilderSamples.Bots
             else
             {
                 await turnContext.SendActivityAsync(MessageFactory.Text("Sorry, could not find an answer in the Q and A system."), cancellationToken);
+            }
+        }
+
+        private async Task ProcessGetEmailAsync(ITurnContext<IMessageActivity> turnContext, LuisResult luisResult, CancellationToken cancellationToken)
+        {
+            _logger.LogInformation("ProcessGetEmailAsync");
+
+            // Retrieve LUIS results for Email.
+            var result = luisResult.ConnectedServiceResult;
+            var topIntent = result.TopScoringIntent.Intent;
+            await turnContext.SendActivityAsync(MessageFactory.Text($"ProcessWeather top intent {topIntent}."), cancellationToken);
+            await turnContext.SendActivityAsync(MessageFactory.Text($"ProcessWeather Intents detected::\n\n{string.Join("\n\n", result.Intents.Select(i => i.Intent))}"), cancellationToken);
+            if (luisResult.Entities.Count > 0)
+            {
+                await turnContext.SendActivityAsync(MessageFactory.Text($"ProcessWeather entities were found in the message:\n\n{string.Join("\n\n", result.Entities.Select(i => i.Entity))}"), cancellationToken);
             }
         }
     }
