@@ -57,12 +57,27 @@ namespace Microsoft.BotBuilderSamples.Bots
                     break;
                 case "getQnA":
                     await turnContext.SendActivityAsync(MessageFactory.Text($"getQnA"), cancellationToken);
-                    //await ProcessWeatherAsync(turnContext, recognizerResult.Properties["luisResult"] as LuisResult, cancellationToken);
+                    await ProcessFHBielefeldQnAAsync(turnContext, cancellationToken);
                     break;
                 default:
                     _logger.LogInformation($"Dispatch unrecognized intent: {intent}.");
                     await turnContext.SendActivityAsync(MessageFactory.Text($"Dispatch unrecognized intent: {intent}."), cancellationToken);
                     break;
+            }
+        }
+
+        private async Task ProcessFHBielefeldQnAAsync(ITurnContext<IMessageActivity> turnContext, CancellationToken cancellationToken)
+        {
+            _logger.LogInformation("ProcessSampleQnAAsync");
+
+            var results = await _botServices.FHBielefeldQnA.GetAnswersAsync(turnContext);
+            if (results.Any())
+            {
+                await turnContext.SendActivityAsync(MessageFactory.Text(results.First().Answer), cancellationToken);
+            }
+            else
+            {
+                await turnContext.SendActivityAsync(MessageFactory.Text("Sorry, could not find an answer in the Q and A system."), cancellationToken);
             }
         }
     }
