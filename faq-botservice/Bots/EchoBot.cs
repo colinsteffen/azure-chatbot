@@ -112,19 +112,18 @@ namespace EchoBot.Bots
 
         private async Task ProcessIntentGetEmailAsync(ITurnContext<IMessageActivity> turnContext, LuisResult luisResult, CancellationToken cancellationToken)
         {
-            List<string> nameFromEntityResult = luisResult.ConnectedServiceResult.Entities.Select(i => i.Entity).ToList();
-
-            if(nameFromEntityResult.Count() > 0 && ENTITY_PERSON_NACHNAME.Equals(nameFromEntityResult[0].GetType()))
+            if(luisResult.ConnectedServiceResult.Entities.Count() > 0)
             {
-                string email = staffInformationController.GetEmailFromStaffPerson(nameFromEntityResult[0]);
+                EntityModel em = luisResult.ConnectedServiceResult.Entities[0];
+                string email = staffInformationController.GetEmailFromStaffPerson(em.Entity);
 
-                if(string.IsNullOrEmpty(email))
+                if(string.IsNullOrEmpty(email) || !ENTITY_PERSON_NACHNAME.Equals(em.Type))
                     await turnContext.SendActivityAsync(MessageFactory.Text($"Leider konnte ich keine passende Person zu der Anfrage finden."), cancellationToken);
                 else
-                    await turnContext.SendActivityAsync(MessageFactory.Text($"Die Email von {nameFromEntityResult[0]} ist {email}."), cancellationToken);
+                    await turnContext.SendActivityAsync(MessageFactory.Text($"Die Email von {em.Entity} ist {email}."), cancellationToken);
             }
-
-            await turnContext.SendActivityAsync(MessageFactory.Text($"Ich brauche einen Namen zu dem ich eine Email finden soll."), cancellationToken);
+            else
+                await turnContext.SendActivityAsync(MessageFactory.Text($"Ich brauche einen Namen zu dem ich eine Email finden soll."), cancellationToken);
         }
     }
 }

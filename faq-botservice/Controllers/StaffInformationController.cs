@@ -20,7 +20,7 @@ namespace EchoBot.Controllers
         {
             List<StaffPerson> staff = GetStaffPersonFromName(name);
 
-            if (staff[0] == null)
+            if (staff.Count == 0)
                 return "";
 
             return staff[0].Email;
@@ -55,7 +55,9 @@ namespace EchoBot.Controllers
 
         private List<StaffPerson> GetStaffPersonFromName(string name)
         {
-            List<StaffPerson> tempStaff = Staff.FindAll(x => x.Name.Contains(name));
+            List<StaffPerson> tempStaff = new List<StaffPerson>();
+            tempStaff.AddRange(Staff.FindAll(x => x.Name.Contains(name, StringComparison.OrdinalIgnoreCase)));
+
             return tempStaff;
         }
     }

@@ -1,0 +1,18 @@
+{
+    "name": "Localhost Bot",
+    "description": "",
+    "services": [
+        {
+            "type": "endpoint",
+            "appId": "d4aec4a1-e54e-4e5e-a143-55ac3d1c0d03",
+            "appPassword": "EIdFh4sg0Fpa3RJLxCUQ9A==!YKz0ncQsmbmMbu4oorzKbVfuNe7nqng6rV505GBMFgs=",
+            "endpoint": "http://localhost:3978/api/messages",
+            "id": "00836d80-8154-11e9-ac7a-f301967952cf",
+            "name": "Localhost"
+        }
+    ],
+    "padlock": "ztlLnAig0N8T8DbZvY0pzA==!uAhkJRsef5odvfQBjg1m4A+uHJwR/j3kSjtLd8h6CplohNkUzKbJuWrHcKuQmbcz",
+    "version": "2.0",
+    "path": "F:\\Dev\\GitHub\\azure-chatbot\\faq-botservice\\Localhost Bot.bot",
+    "overrides": null
+}
