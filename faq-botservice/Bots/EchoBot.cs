@@ -11,11 +11,21 @@ using Microsoft.Bot.Builder.AI.QnA;
 using EchoBot;
 using Microsoft.Extensions.Logging;
 using Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime.Models;
+using EchoBot.Model;
+using EchoBot.Controllers;
 
-namespace Microsoft.BotBuilderSamples.Bots
+namespace EchoBot.Bots
 {
     public class EchoBot : ActivityHandler
     {
+        private const string INTENT_STAFF_EMAIL = "getEmail";
+        private const string INTENT_STAFF_PHONENUMBER = "getPhonenumber";
+        private const string INTENT_STAFF_ROOM = "getRoom";
+
+        private const string ENTITY_PERSON_NACHNAME = "personNachname";
+
+        public StaffInformationController staffInformationController;
+
         private ILogger<EchoBot> _logger;
         private IBotServices _botServices;
 
@@ -23,6 +33,8 @@ namespace Microsoft.BotBuilderSamples.Bots
         {
             _logger = logger;
             _botServices = botServices;
+
+            staffInformationController = new StaffInformationController();
         }
 
         protected override async Task OnMessageActivityAsync(ITurnContext<IMessageActivity> turnContext, CancellationToken cancellationToken)
@@ -54,7 +66,7 @@ namespace Microsoft.BotBuilderSamples.Bots
             {
                 case "getEmail":
                     await turnContext.SendActivityAsync(MessageFactory.Text($"GetEmail"), cancellationToken);
-                    await ProcessGetEmailAsync(turnContext, recognizerResult.Properties["luisResult"] as LuisResult, cancellationToken);
+                    await ProcessGetStaffInformationAsync(turnContext, recognizerResult.Properties["luisResult"] as LuisResult, cancellationToken);
                     break;
                 case "getQnA":
                     await turnContext.SendActivityAsync(MessageFactory.Text($"getQnA"), cancellationToken);
@@ -82,19 +94,37 @@ namespace Microsoft.BotBuilderSamples.Bots
             }
         }
 
-        private async Task ProcessGetEmailAsync(ITurnContext<IMessageActivity> turnContext, LuisResult luisResult, CancellationToken cancellationToken)
+        private async Task ProcessGetStaffInformationAsync(ITurnContext<IMessageActivity> turnContext, LuisResult luisResult, CancellationToken cancellationToken)
         {
-            _logger.LogInformation("ProcessGetEmailAsync");
+            _logger.LogInformation("ProcessGetStaffInformationAsync");
 
-            // Retrieve LUIS results for Email.
             var result = luisResult.ConnectedServiceResult;
             var topIntent = result.TopScoringIntent.Intent;
-            await turnContext.SendActivityAsync(MessageFactory.Text($"ProcessWeather top intent {topIntent}."), cancellationToken);
-            await turnContext.SendActivityAsync(MessageFactory.Text($"ProcessWeather Intents detected::\n\n{string.Join("\n\n", result.Intents.Select(i => i.Intent))}"), cancellationToken);
+            await turnContext.SendActivityAsync(MessageFactory.Text($"GetStaffInformation top intent {topIntent}."), cancellationToken);
             if (luisResult.Entities.Count > 0)
             {
-                await turnContext.SendActivityAsync(MessageFactory.Text($"ProcessWeather entities were found in the message:\n\n{string.Join("\n\n", result.Entities.Select(i => i.Entity))}"), cancellationToken);
+                await turnContext.SendActivityAsync(MessageFactory.Text($"GetStaffInformation entities were found in the message:\n\n{string.Join("\n\n", result.Entities.Select(i => i.Entity))}"), cancellationToken);
             }
+
+            if (INTENT_STAFF_EMAIL.Equals(topIntent))
+                await ProcessIntentGetEmailAsync(turnContext, luisResult, cancellationToken); 
+        }
+
+        private async Task ProcessIntentGetEmailAsync(ITurnContext<IMessageActivity> turnContext, LuisResult luisResult, CancellationToken cancellationToken)
+        {
+            List<string> nameFromEntityResult = luisResult.ConnectedServiceResult.Entities.Select(i => i.Entity).ToList();
+
+            if(nameFromEntityResult.Count() > 0 && ENTITY_PERSON_NACHNAME.Equals(nameFromEntityResult[0].GetType()))
+            {
+                string email = staffInformationController.GetEmailFromStaffPerson(nameFromEntityResult[0]);
+
+                if(string.IsNullOrEmpty(email))
+                    await turnContext.SendActivityAsync(MessageFactory.Text($"Leider konnte ich keine passende Person zu der Anfrage finden."), cancellationToken);
+                else
+                    await turnContext.SendActivityAsync(MessageFactory.Text($"Die Email von {nameFromEntityResult[0]} ist {email}."), cancellationToken);
+            }
+
+            await turnContext.SendActivityAsync(MessageFactory.Text($"Ich brauche einen Namen zu dem ich eine Email finden soll."), cancellationToken);
         }
     }
 }
