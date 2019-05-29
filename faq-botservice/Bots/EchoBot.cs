@@ -65,11 +65,11 @@ namespace EchoBot.Bots
             switch (intent)
             {
                 case "getEmail":
-                    await turnContext.SendActivityAsync(MessageFactory.Text($"GetEmail"), cancellationToken);
+                    //await turnContext.SendActivityAsync(MessageFactory.Text($"GetEmail"), cancellationToken);
                     await ProcessGetStaffInformationAsync(turnContext, recognizerResult.Properties["luisResult"] as LuisResult, cancellationToken);
                     break;
                 case "getQnA":
-                    await turnContext.SendActivityAsync(MessageFactory.Text($"getQnA"), cancellationToken);
+                    //await turnContext.SendActivityAsync(MessageFactory.Text($"getQnA"), cancellationToken);
                     await ProcessFHBielefeldQnAAsync(turnContext, cancellationToken);
                     break;
                 default:
@@ -107,7 +107,9 @@ namespace EchoBot.Bots
             }
 
             if (INTENT_STAFF_EMAIL.Equals(topIntent))
-                await ProcessIntentGetEmailAsync(turnContext, luisResult, cancellationToken); 
+                await ProcessIntentGetEmailAsync(turnContext, luisResult, cancellationToken);
+            else if(INTENT_STAFF_PHONENUMBER.Equals(topIntent))
+                await ProcessIntentGetPhonenumberAsync(turnContext, luisResult, cancellationToken);
         }
 
         private async Task ProcessIntentGetEmailAsync(ITurnContext<IMessageActivity> turnContext, LuisResult luisResult, CancellationToken cancellationToken)
@@ -124,6 +126,22 @@ namespace EchoBot.Bots
             }
             else
                 await turnContext.SendActivityAsync(MessageFactory.Text($"Ich brauche einen Namen zu dem ich eine Email finden soll."), cancellationToken);
+        }
+
+        private async Task ProcessIntentGetPhonenumberAsync(ITurnContext<IMessageActivity> turnContext, LuisResult luisResult, CancellationToken cancellationToken)
+        {
+            if (luisResult.ConnectedServiceResult.Entities.Count() > 0)
+            {
+                EntityModel em = luisResult.ConnectedServiceResult.Entities[0];
+                string phonenumber = staffInformationController.GetPhonenumberFromStaffPerson(em.Entity);
+
+                if (string.IsNullOrEmpty(phonenumber) || !ENTITY_PERSON_NACHNAME.Equals(em.Type))
+                    await turnContext.SendActivityAsync(MessageFactory.Text($"Leider konnte ich keine passende Person zu der Anfrage finden."), cancellationToken);
+                else
+                    await turnContext.SendActivityAsync(MessageFactory.Text($"Die Telefonnummer von {em.Entity} ist {phonenumber}."), cancellationToken);
+            }
+            else
+                await turnContext.SendActivityAsync(MessageFactory.Text($"Ich brauche einen Namen zu dem ich eine Telefonnummer finden soll."), cancellationToken);
         }
     }
 }
