@@ -7,12 +7,8 @@ using System.Threading.Tasks;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Schema;
 using System.Linq;
-using Microsoft.Bot.Builder.AI.QnA;
-using EchoBot;
 using Microsoft.Extensions.Logging;
 using Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime.Models;
-using EchoBot.Model;
-using EchoBot.Controllers;
 
 namespace EchoBot.Bots
 {
@@ -22,9 +18,7 @@ namespace EchoBot.Bots
         private const string INTENT_STAFF_PHONENUMBER = "getPhonenumber";
         private const string INTENT_STAFF_ROOM = "getRoom";
 
-        private const string ENTITY_PERSON_NACHNAME = "personNachname";
-
-        public StaffInformationController staffInformationController;
+        private ProcessStaffInformationIntents processStaffInformationIntents;
 
         private ILogger<EchoBot> _logger;
         private IBotServices _botServices;
@@ -34,7 +28,7 @@ namespace EchoBot.Bots
             _logger = logger;
             _botServices = botServices;
 
-            staffInformationController = new StaffInformationController();
+            processStaffInformationIntents = new ProcessStaffInformationIntents();
         }
 
         protected override async Task OnMessageActivityAsync(ITurnContext<IMessageActivity> turnContext, CancellationToken cancellationToken)
@@ -107,41 +101,10 @@ namespace EchoBot.Bots
             }
 
             if (INTENT_STAFF_EMAIL.Equals(topIntent))
-                await ProcessIntentGetEmailAsync(turnContext, luisResult, cancellationToken);
+                await processStaffInformationIntents.ProcessIntentGetEmailAsync(turnContext, luisResult, cancellationToken);
             else if(INTENT_STAFF_PHONENUMBER.Equals(topIntent))
-                await ProcessIntentGetPhonenumberAsync(turnContext, luisResult, cancellationToken);
+                await processStaffInformationIntents.ProcessIntentGetPhonenumberAsync(turnContext, luisResult, cancellationToken);
         }
 
-        private async Task ProcessIntentGetEmailAsync(ITurnContext<IMessageActivity> turnContext, LuisResult luisResult, CancellationToken cancellationToken)
-        {
-            if(luisResult.ConnectedServiceResult.Entities.Count() > 0)
-            {
-                EntityModel em = luisResult.ConnectedServiceResult.Entities[0];
-                string email = staffInformationController.GetEmailFromStaffPerson(em.Entity);
-
-                if(string.IsNullOrEmpty(email) || !ENTITY_PERSON_NACHNAME.Equals(em.Type))
-                    await turnContext.SendActivityAsync(MessageFactory.Text($"Leider konnte ich keine passende Person zu der Anfrage finden."), cancellationToken);
-                else
-                    await turnContext.SendActivityAsync(MessageFactory.Text($"Die Email von {em.Entity} ist {email}."), cancellationToken);
-            }
-            else
-                await turnContext.SendActivityAsync(MessageFactory.Text($"Ich brauche einen Namen zu dem ich eine Email finden soll."), cancellationToken);
-        }
-
-        private async Task ProcessIntentGetPhonenumberAsync(ITurnContext<IMessageActivity> turnContext, LuisResult luisResult, CancellationToken cancellationToken)
-        {
-            if (luisResult.ConnectedServiceResult.Entities.Count() > 0)
-            {
-                EntityModel em = luisResult.ConnectedServiceResult.Entities[0];
-                string phonenumber = staffInformationController.GetPhonenumberFromStaffPerson(em.Entity);
-
-                if (string.IsNullOrEmpty(phonenumber) || !ENTITY_PERSON_NACHNAME.Equals(em.Type))
-                    await turnContext.SendActivityAsync(MessageFactory.Text($"Leider konnte ich keine passende Person zu der Anfrage finden."), cancellationToken);
-                else
-                    await turnContext.SendActivityAsync(MessageFactory.Text($"Die Telefonnummer von {em.Entity} ist {phonenumber}."), cancellationToken);
-            }
-            else
-                await turnContext.SendActivityAsync(MessageFactory.Text($"Ich brauche einen Namen zu dem ich eine Telefonnummer finden soll."), cancellationToken);
-        }
     }
 }
