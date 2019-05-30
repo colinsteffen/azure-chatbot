@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using EchoBot.Helper;
 
 namespace EchoBot.Bots
 {
@@ -33,7 +34,8 @@ namespace EchoBot.Bots
             if (luisResult.ConnectedServiceResult.Entities.Count() > 0)
             {
                 EntityModel em = luisResult.ConnectedServiceResult.Entities[0];
-                string email = staffInformationController.GetEmailFromStaffPerson(em.Entity);
+                string entityPersonName = TextFormatHelper.RemoveWhitespaceBeforeAfterHyphen(em.Entity);
+                string email = staffInformationController.GetEmailFromStaffPerson(entityPersonName);
 
                 if (string.IsNullOrEmpty(email) || !ENTITY_PERSON_NACHNAME.Equals(em.Type))
                     await turnContext.SendActivityAsync(MessageFactory.Text($"Leider konnte ich keine passende Person zu der Anfrage finden."), cancellationToken);
@@ -51,7 +53,8 @@ namespace EchoBot.Bots
             if (luisResult.ConnectedServiceResult.Entities.Count() > 0)
             {
                 EntityModel em = luisResult.ConnectedServiceResult.Entities[0];
-                string phonenumber = staffInformationController.GetPhonenumberFromStaffPerson(em.Entity);
+                string entityPersonName = TextFormatHelper.RemoveWhitespaceBeforeAfterHyphen(em.Entity);
+                string phonenumber = staffInformationController.GetPhonenumberFromStaffPerson(entityPersonName);
 
                 if (string.IsNullOrEmpty(phonenumber) || !ENTITY_PERSON_NACHNAME.Equals(em.Type))
                     await turnContext.SendActivityAsync(MessageFactory.Text($"Leider konnte ich keine passende Person zu der Anfrage finden."), cancellationToken);
