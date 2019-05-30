@@ -28,7 +28,7 @@ namespace EchoBot.Bots
             _logger = logger;
             _botServices = botServices;
 
-            processStaffInformationIntents = new ProcessStaffInformationIntents();
+            processStaffInformationIntents = new ProcessStaffInformationIntents(_logger); ;
         }
 
         protected override async Task OnMessageActivityAsync(ITurnContext<IMessageActivity> turnContext, CancellationToken cancellationToken)

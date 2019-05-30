@@ -2,6 +2,7 @@
 using Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime.Models;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Schema;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,15 +15,21 @@ namespace EchoBot.Bots
     {
         private const string ENTITY_PERSON_NACHNAME = "personNachname";
 
+        private ILogger<EchoBot> _logger;
+
         private StaffInformationController staffInformationController;
 
-        public ProcessStaffInformationIntents()
+        public ProcessStaffInformationIntents(ILogger<EchoBot> logger)
         {
+            this._logger = logger;
+
             staffInformationController = new StaffInformationController();
         }
 
         public async Task ProcessIntentGetEmailAsync(ITurnContext<IMessageActivity> turnContext, LuisResult luisResult, CancellationToken cancellationToken)
         {
+            _logger.LogInformation("ProcessIntentGetEmailAsync");
+
             if (luisResult.ConnectedServiceResult.Entities.Count() > 0)
             {
                 EntityModel em = luisResult.ConnectedServiceResult.Entities[0];
@@ -39,6 +46,8 @@ namespace EchoBot.Bots
 
         public async Task ProcessIntentGetPhonenumberAsync(ITurnContext<IMessageActivity> turnContext, LuisResult luisResult, CancellationToken cancellationToken)
         {
+            _logger.LogInformation("ProcessIntentGetPhonenumberAsync");
+
             if (luisResult.ConnectedServiceResult.Entities.Count() > 0)
             {
                 EntityModel em = luisResult.ConnectedServiceResult.Entities[0];
