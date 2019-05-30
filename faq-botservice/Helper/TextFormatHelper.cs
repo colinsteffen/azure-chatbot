@@ -9,9 +9,9 @@ namespace EchoBot.Helper
     {
         public static string RemoveWhitespaceBeforeAfterHyphen(string text)
         {
-            text.Replace(" - ", "-");
+            string newText = text.Replace(" - ", "-");
 
-            return text;
+            return newText;
         }
     }
 }
