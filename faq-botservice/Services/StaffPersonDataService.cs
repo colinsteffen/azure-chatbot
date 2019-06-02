@@ -10,12 +10,13 @@ namespace EchoBot.Services
 {
     public static class StaffPersonDataService
     {
-        private const string URL_STAFF_PATH = "https://www.fh-bielefeld.de/personenverzeichnis.html";
+        private const string URL_FH = "https://www.fh-bielefeld.de";
+        private const string URL_STAFF = "/personenverzeichnis.html";
 
         public static List<StaffPerson> LoadBasicStaffList()
         {
             var web = new HtmlWeb();
-            var doc = web.Load(URL_STAFF_PATH);
+            var doc = web.Load(URL_FH + URL_STAFF);
 
             List<StaffPerson> staff = new List<StaffPerson>();
             foreach (HtmlNode node in doc.DocumentNode.SelectNodes("//div[@class='wrapper_person']"))
@@ -47,10 +48,51 @@ namespace EchoBot.Services
             return staff;
         }
 
-        public static StaffPerson LoadStaffPersonInformation(StaffPerson sp)
+        public static void LoadStaffPersonInformation(StaffPerson sp)
         {
+            var web = new HtmlWeb();
+            var staffLink = sp.Link.Replace(".html", "");
+            var doc = web.Load(URL_FH + staffLink);
+
+            HtmlNode node;
+
+            //Office Hours
+            node = doc.DocumentNode.SelectSingleNode("//div[@class='officehours']");
+            if (node != null)
+            {
+                var sprechzeitenString = node.InnerHtml.ToString();
+                sp.OfficeHours = Regex.Match(sprechzeitenString, @"<div><p>(.+)</p></div>", RegexOptions.Singleline)
+                    .Groups[1].Value;
+            }
+
+            node = doc.DocumentNode.SelectSingleNode("//div[@class='institution']");
+            if (node != null)
+            {
+                var institutionString = node.InnerHtml.ToString();
+
+                //Department
+                var departmentString = institutionString.Substring(12);
+                if (!string.IsNullOrEmpty(departmentString))
+                    sp.Department = departmentString;
+            }
+
+            node = doc.DocumentNode.SelectSingleNode("//div[@class='kontakt_rechts']");
+            if (node != null)
+            {
+                //Room
+                var contactString = node.InnerHtml.ToString();
+
+                var roomString = Regex.Match(contactString, @"Raum (.+)<br>Telefon", RegexOptions.Singleline)
+                    .Groups[1].Value;
+                if (!string.IsNullOrEmpty(roomString))
+                    sp.Room = roomString;
+            }
+
+            //Lectures
             //NOT IMPLEMENTET YET
-            return sp;
+
+            //Publications
+            //NOT IMPLEMENTET YET
         }
     }
 }

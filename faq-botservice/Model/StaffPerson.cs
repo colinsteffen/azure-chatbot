@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EchoBot.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -21,6 +22,17 @@ namespace EchoBot.Model
         {
             Courses = new List<string>();
             Publications = new List<string>();
+        }
+
+        public void CheckExtendedInformation()
+        {
+            if(string.IsNullOrEmpty(OfficeHours)
+                && string.IsNullOrEmpty(OfficeHours)
+                && string.IsNullOrEmpty(Room)
+                && string.IsNullOrEmpty(Department)
+                && Courses.Count == 0
+                && Publications.Count == 0)
+                StaffPersonDataService.LoadStaffPersonInformation(this);
         }
     }
 }
