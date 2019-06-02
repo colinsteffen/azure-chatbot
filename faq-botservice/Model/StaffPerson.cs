@@ -11,5 +11,16 @@ namespace EchoBot.Model
         public string Name { get; set; }
         public string Phonenumber { get; set; }
         public string Link { get; set; }
+        public string OfficeHours { get; set; }
+        public string Room { get; set; }
+        public string Department { get; set; }
+        public List<string> Courses { get; set; }
+        public List<string> Publications { get; set; }
+
+        public StaffPerson()
+        {
+            Courses = new List<string>();
+            Publications = new List<string>();
+        }
     }
 }
