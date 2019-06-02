@@ -62,7 +62,10 @@ namespace EchoBot.Services
             {
                 var sprechzeitenString = node.InnerHtml.ToString();
                 sp.OfficeHours = Regex.Match(sprechzeitenString, @"<div><p>(.+)</p></div>", RegexOptions.Singleline)
-                    .Groups[1].Value;
+                    .Groups[1].Value
+                    .Replace("</p>", "")
+                    .Replace("<p>", "")
+                    .Replace("..", "");
             }
 
             node = doc.DocumentNode.SelectSingleNode("//div[@class='institution']");

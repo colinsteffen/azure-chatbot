@@ -48,9 +48,38 @@ namespace EchoBot.Controllers
 
         public string GetRoomnumberFromStaffPerson(string name)
         {
-            //NOT IMPLEMENTET YET
+            List<StaffPerson> staff = GetStaffPersonFromName(name);
 
-            return "";
+            if (staff[0] == null)
+                return "";
+
+            staff[0].CheckExtendedInformation();
+
+            return staff[0].Room;
+        }
+
+        public string GetDepartmentFromStaffPerson(string name)
+        {
+            List<StaffPerson> staff = GetStaffPersonFromName(name);
+
+            if (staff[0] == null)
+                return "";
+
+            staff[0].CheckExtendedInformation();
+
+            return staff[0].Department;
+        }
+
+        public string GetOfficeHoursFromStaffPerson(string name)
+        {
+            List<StaffPerson> staff = GetStaffPersonFromName(name);
+
+            if (staff[0] == null)
+                return "";
+
+            staff[0].CheckExtendedInformation();
+
+            return staff[0].OfficeHours;
         }
 
         private List<StaffPerson> GetStaffPersonFromName(string name)

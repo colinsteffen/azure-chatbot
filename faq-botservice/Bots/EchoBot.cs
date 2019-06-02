@@ -17,6 +17,14 @@ namespace EchoBot.Bots
         private const string INTENT_STAFF_EMAIL = "getEmail";
         private const string INTENT_STAFF_PHONENUMBER = "getPhonenumber";
         private const string INTENT_STAFF_ROOM = "getRoom";
+        private const string INTENT_STAFF_COURSES = "getCourses";
+        private const string INTENT_STAFF_DEPARTMENT = "getDepartment";
+        private const string INTENT_STAFF_OFFICE_HOURS = "getOfficeHours";
+        private const string INTENT_STAFF_PUBLICATIONS = "getPublications";
+        private const string INTENT_STAFF_STAFF_FROM_DEPARTMENT = "getStaffFromDepartment";
+
+        private const string INTENT_DESCRIBE_FUNCTIONALITY_FAQ = "FAQ";
+        private const string INTENT_DESCRIBE_FUNCTIONALITY_PERSONAL_DIRECTORY = "PERSONENVERZEICHNIS";
 
         private ProcessStaffInformationIntents processStaffInformationIntents;
 
@@ -33,14 +41,21 @@ namespace EchoBot.Bots
 
         protected override async Task OnMessageActivityAsync(ITurnContext<IMessageActivity> turnContext, CancellationToken cancellationToken)
         {
-            // First, we use the dispatch model to determine which cognitive service (LUIS or QnA) to use.
-            var recognizerResult = await _botServices.Dispatch.RecognizeAsync(turnContext, cancellationToken);
+            if (INTENT_DESCRIBE_FUNCTIONALITY_FAQ.Equals(turnContext.Activity.Text.ToUpper()))
+                await turnContext.SendActivityAsync(MessageFactory.Text($"Stell einfach eine Frage an mich. Ich werde die Frage automatisch zuordnen und passend beantworten."), cancellationToken);
+            else if (INTENT_DESCRIBE_FUNCTIONALITY_PERSONAL_DIRECTORY.Equals(turnContext.Activity.Text.ToUpper()))
+                await turnContext.SendActivityAsync(MessageFactory.Text($"Ich beantworte dir gerne Fragen zu dem Personal der FH Bielefeld. Schreib einfach eine Frage zu den folgenden Inhalten\n\nE-Mail\n\nTelefonnummer\n\nFachbereich\n\nRaum\n\nSprechzeiten\n\n mit dem Namen des Mitarbeiters."), cancellationToken);
+            else
+            {
+                // First, we use the dispatch model to determine which cognitive service (LUIS or QnA) to use.
+                var recognizerResult = await _botServices.Dispatch.RecognizeAsync(turnContext, cancellationToken);
 
-            // Top intent tell us which cognitive service to use.
-            var topIntent = recognizerResult.GetTopScoringIntent();
+                // Top intent tell us which cognitive service to use.
+                var topIntent = recognizerResult.GetTopScoringIntent();
 
-            // Next, we call the dispatcher with the top intent.
-            await DispatchToTopIntentAsync(turnContext, topIntent.intent, recognizerResult, cancellationToken);
+                // Next, we call the dispatcher with the top intent.
+                await DispatchToTopIntentAsync(turnContext, topIntent.intent, recognizerResult, cancellationToken);
+            }
         }
 
         protected override async Task OnMembersAddedAsync(IList<ChannelAccount> membersAdded, ITurnContext<IConversationUpdateActivity> turnContext, CancellationToken cancellationToken)
@@ -48,9 +63,7 @@ namespace EchoBot.Bots
             foreach (var member in membersAdded)
             {
                 if (member.Id != turnContext.Activity.Recipient.Id)
-                {
-                    await turnContext.SendActivityAsync(MessageFactory.Text($"Willkommen zum Bot der FH Bielefeld!"), cancellationToken);
-                }
+                    await turnContext.SendActivityAsync(MessageFactory.Text($"Willkommen zum Bot der FH Bielefeld!\n\nDer Bot beantwortet dir zu folgenden Themen Fragen:\n\n-FAQ Fragen\n\n-Informationen aus dem Personenverzeichnis\n\n\n\nWenn du Fragen zu dem Vorgehen hast schreibe 'FAQ' oder Personenverzeichnis' um weitere Informationen zu erhalten."), cancellationToken);
             }
         }
 
@@ -59,11 +72,9 @@ namespace EchoBot.Bots
             switch (intent)
             {
                 case "getEmail":
-                    //await turnContext.SendActivityAsync(MessageFactory.Text($"GetEmail"), cancellationToken);
                     await ProcessGetStaffInformationAsync(turnContext, recognizerResult.Properties["luisResult"] as LuisResult, cancellationToken);
                     break;
                 case "getQnA":
-                    //await turnContext.SendActivityAsync(MessageFactory.Text($"getQnA"), cancellationToken);
                     await ProcessFHBielefeldQnAAsync(turnContext, cancellationToken);
                     break;
                 default:
@@ -79,13 +90,9 @@ namespace EchoBot.Bots
 
             var results = await _botServices.FHBielefeldQnA.GetAnswersAsync(turnContext);
             if (results.Any())
-            {
                 await turnContext.SendActivityAsync(MessageFactory.Text(results.First().Answer), cancellationToken);
-            }
             else
-            {
                 await turnContext.SendActivityAsync(MessageFactory.Text("Sorry, could not find an answer in the Q and A system."), cancellationToken);
-            }
         }
 
         private async Task ProcessGetStaffInformationAsync(ITurnContext<IMessageActivity> turnContext, LuisResult luisResult, CancellationToken cancellationToken)
@@ -94,16 +101,17 @@ namespace EchoBot.Bots
 
             var result = luisResult.ConnectedServiceResult;
             var topIntent = result.TopScoringIntent.Intent;
-            await turnContext.SendActivityAsync(MessageFactory.Text($"GetStaffInformation top intent {topIntent}."), cancellationToken);
-            if (luisResult.Entities.Count > 0)
-            {
-                await turnContext.SendActivityAsync(MessageFactory.Text($"GetStaffInformation entities were found in the message:\n\n{string.Join("\n\n", result.Entities.Select(i => i.Entity))}"), cancellationToken);
-            }
 
             if (INTENT_STAFF_EMAIL.Equals(topIntent))
                 await processStaffInformationIntents.ProcessIntentGetEmailAsync(turnContext, luisResult, cancellationToken);
             else if(INTENT_STAFF_PHONENUMBER.Equals(topIntent))
                 await processStaffInformationIntents.ProcessIntentGetPhonenumberAsync(turnContext, luisResult, cancellationToken);
+            else if (INTENT_STAFF_OFFICE_HOURS.Equals(topIntent))
+                await processStaffInformationIntents.ProcessIntentGetOfficeHoursAsync(turnContext, luisResult, cancellationToken);
+            else if (INTENT_STAFF_DEPARTMENT.Equals(topIntent))
+                await processStaffInformationIntents.ProcessIntentGetDepartmentAsync(turnContext, luisResult, cancellationToken);
+            else if (INTENT_STAFF_ROOM.Equals(topIntent))
+                await processStaffInformationIntents.ProcessIntentGetRoomAsync(turnContext, luisResult, cancellationToken);
         }
 
     }
