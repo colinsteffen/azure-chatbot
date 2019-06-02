@@ -44,7 +44,7 @@ namespace EchoBot.Bots
             if (INTENT_DESCRIBE_FUNCTIONALITY_FAQ.Equals(turnContext.Activity.Text.ToUpper()))
                 await turnContext.SendActivityAsync(MessageFactory.Text($"Stell einfach eine Frage an mich. Ich werde die Frage automatisch zuordnen und passend beantworten."), cancellationToken);
             else if (INTENT_DESCRIBE_FUNCTIONALITY_PERSONAL_DIRECTORY.Equals(turnContext.Activity.Text.ToUpper()))
-                await turnContext.SendActivityAsync(MessageFactory.Text($"Ich beantworte dir gerne Fragen zu dem Personal der FH Bielefeld. Schreib einfach eine Frage zu den folgenden Inhalten\n\nE-Mail\n\nTelefonnummer\n\nFachbereich\n\nRaum\n\nSprechzeiten\n\n mit dem Namen des Mitarbeiters."), cancellationToken);
+                await turnContext.SendActivityAsync(MessageFactory.Text($"Ich beantworte dir gerne Fragen zu dem Personal der FH Bielefeld. Schreib einfach eine Frage zu den folgenden Inhalten:\n\nE-Mail\nTelefonnummer\nFachbereich\nRaum\nSprechzeiten\n\n mit dem Namen des Mitarbeiters."), cancellationToken);
             else
             {
                 // First, we use the dispatch model to determine which cognitive service (LUIS or QnA) to use.
@@ -63,7 +63,7 @@ namespace EchoBot.Bots
             foreach (var member in membersAdded)
             {
                 if (member.Id != turnContext.Activity.Recipient.Id)
-                    await turnContext.SendActivityAsync(MessageFactory.Text($"Willkommen zum Bot der FH Bielefeld!\n\nDer Bot beantwortet dir zu folgenden Themen Fragen:\n\n-FAQ Fragen\n\n-Informationen aus dem Personenverzeichnis\n\n\n\nWenn du Fragen zu dem Vorgehen hast schreibe 'FAQ' oder Personenverzeichnis' um weitere Informationen zu erhalten."), cancellationToken);
+                    await turnContext.SendActivityAsync(MessageFactory.Text($"Willkommen zum Bot der FH Bielefeld!\n\nDer Bot beantwortet dir zu folgenden Themen Fragen:\n\n-FAQ Fragen\n-Informationen aus dem Personenverzeichnis\n\n\n\nWenn du Fragen zu dem Vorgehen hast schreibe 'FAQ' oder 'Personenverzeichnis' um weitere Informationen zu erhalten."), cancellationToken);
             }
         }
 
