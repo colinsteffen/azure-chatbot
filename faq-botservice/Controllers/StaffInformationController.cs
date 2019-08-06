@@ -9,7 +9,7 @@ namespace EchoBot.Controllers
 {
     public class StaffInformationController
     {
-        public List<StaffPerson> Staff;
+        private List<StaffPerson> Staff;
 
         public StaffInformationController()
         {
