@@ -9,19 +9,18 @@ namespace EchoBot.Controllers
 {
     public class StaffInformationController
     {
-        private List<StaffPerson> Staff;
+        private List<StaffPerson> staff;
 
         public StaffInformationController()
         {
-            Staff = StaffPersonDataService.LoadBasicStaffList();
+            staff = StaffPersonDataService.LoadBasicStaffList();
         }
 
         public string GetEmailFromStaffPerson(string name)
         {
             List<StaffPerson> staff = GetStaffPersonFromName(name);
 
-            if (staff.Count == 0)
-                return "";
+            if (staff.Count == 0) return "";
 
             return staff[0].Email;
         }
@@ -30,8 +29,7 @@ namespace EchoBot.Controllers
         {
             List<StaffPerson> staff = GetStaffPersonFromName(name);
 
-            if (staff[0] == null)
-                return "";
+            if (staff[0] == null) return "";
 
             return staff[0].Name;
         }
@@ -40,8 +38,7 @@ namespace EchoBot.Controllers
         {
             List<StaffPerson> staff = GetStaffPersonFromName(name);
 
-            if (staff[0] == null)
-                return "";
+            if (staff[0] == null) return "";
 
             return staff[0].Phonenumber;
         }
@@ -50,8 +47,7 @@ namespace EchoBot.Controllers
         {
             List<StaffPerson> staff = GetStaffPersonFromName(name);
 
-            if (staff[0] == null)
-                return "";
+            if (staff[0] == null) return "";
 
             staff[0].CheckExtendedInformation();
 
@@ -62,8 +58,7 @@ namespace EchoBot.Controllers
         {
             List<StaffPerson> staff = GetStaffPersonFromName(name);
 
-            if (staff[0] == null)
-                return "";
+            if (staff[0] == null) return "";
 
             staff[0].CheckExtendedInformation();
 
@@ -74,8 +69,7 @@ namespace EchoBot.Controllers
         {
             List<StaffPerson> staff = GetStaffPersonFromName(name);
 
-            if (staff[0] == null)
-                return "";
+            if (staff[0] == null) return "";
 
             staff[0].CheckExtendedInformation();
 
@@ -85,7 +79,7 @@ namespace EchoBot.Controllers
         private List<StaffPerson> GetStaffPersonFromName(string name)
         {
             List<StaffPerson> tempStaff = new List<StaffPerson>();
-            tempStaff.AddRange(Staff.FindAll(x => x.Name.Contains(name, StringComparison.OrdinalIgnoreCase)));
+            tempStaff.AddRange(staff.FindAll(x => x.Name.Contains(name, StringComparison.OrdinalIgnoreCase)));
 
             return tempStaff;
         }

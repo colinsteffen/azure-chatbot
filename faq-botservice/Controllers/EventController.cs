@@ -9,7 +9,7 @@ namespace EchoBot.Controllers
 {
     public class EventController
     {
-        private List<Event> Events;
+        private List<Event> events;
 
         public EventController()
         {
