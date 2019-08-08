@@ -13,7 +13,7 @@ namespace EchoBot.Controllers
 
         public EventController()
         {
-            Events = EventDataService.LoadUpcomingEvents();
+            events = EventDataService.LoadUpcomingEvents();
         }
     }
 }

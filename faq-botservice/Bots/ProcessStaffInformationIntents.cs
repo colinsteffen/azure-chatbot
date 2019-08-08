@@ -17,7 +17,6 @@ namespace EchoBot.Bots
         private const string ENTITY_PERSON_NACHNAME = "personNachname";
 
         private ILogger<EchoBot> _logger;
-
         private StaffInformationController staffInformationController;
 
         public ProcessStaffInformationIntents(ILogger<EchoBot> logger)

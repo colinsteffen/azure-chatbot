@@ -9,23 +9,12 @@ using Microsoft.Bot.Schema;
 using System.Linq;
 using Microsoft.Extensions.Logging;
 using Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime.Models;
+using EchoBot.Helper;
 
 namespace EchoBot.Bots
 {
     public class EchoBot : ActivityHandler
     {
-        private const string INTENT_STAFF_EMAIL = "getEmail";
-        private const string INTENT_STAFF_PHONENUMBER = "getPhonenumber";
-        private const string INTENT_STAFF_ROOM = "getRoom";
-        private const string INTENT_STAFF_COURSES = "getCourses";
-        private const string INTENT_STAFF_DEPARTMENT = "getDepartment";
-        private const string INTENT_STAFF_OFFICE_HOURS = "getOfficeHours";
-        private const string INTENT_STAFF_PUBLICATIONS = "getPublications";
-        private const string INTENT_STAFF_STAFF_FROM_DEPARTMENT = "getStaffFromDepartment";
-
-        private const string INTENT_DESCRIBE_FUNCTIONALITY_FAQ = "FAQ";
-        private const string INTENT_DESCRIBE_FUNCTIONALITY_PERSONAL_DIRECTORY = "PERSONENVERZEICHNIS";
-
         private ProcessStaffInformationIntents processStaffInformationIntents;
 
         private ILogger<EchoBot> _logger;
@@ -41,9 +30,9 @@ namespace EchoBot.Bots
 
         protected override async Task OnMessageActivityAsync(ITurnContext<IMessageActivity> turnContext, CancellationToken cancellationToken)
         {
-            if (INTENT_DESCRIBE_FUNCTIONALITY_FAQ.Equals(turnContext.Activity.Text.ToUpper()))
+            if (IntentHelper.INTENT_DESCRIBE_FUNCTIONALITY_FAQ.Equals(turnContext.Activity.Text.ToUpper()))
                 await turnContext.SendActivityAsync(MessageFactory.Text($"Stell einfach eine Frage an mich. Ich werde die Frage automatisch zuordnen und passend beantworten."), cancellationToken);
-            else if (INTENT_DESCRIBE_FUNCTIONALITY_PERSONAL_DIRECTORY.Equals(turnContext.Activity.Text.ToUpper()))
+            else if (IntentHelper.INTENT_DESCRIBE_FUNCTIONALITY_PERSONAL_DIRECTORY.Equals(turnContext.Activity.Text.ToUpper()))
                 await turnContext.SendActivityAsync(MessageFactory.Text($"Ich beantworte dir gerne Fragen zu dem Personal der FH Bielefeld. Schreib einfach eine Frage zu den folgenden Inhalten:\n\nE-Mail\nTelefonnummer\nFachbereich\nRaum\nSprechzeiten\n\n mit dem Namen des Mitarbeiters."), cancellationToken);
             else
             {
@@ -102,15 +91,15 @@ namespace EchoBot.Bots
             var result = luisResult.ConnectedServiceResult;
             var topIntent = result.TopScoringIntent.Intent;
 
-            if (INTENT_STAFF_EMAIL.Equals(topIntent))
+            if (IntentHelper.INTENT_STAFF_EMAIL.Equals(topIntent))
                 await processStaffInformationIntents.ProcessIntentGetEmailAsync(turnContext, luisResult, cancellationToken);
-            else if(INTENT_STAFF_PHONENUMBER.Equals(topIntent))
+            else if(IntentHelper.INTENT_STAFF_PHONENUMBER.Equals(topIntent))
                 await processStaffInformationIntents.ProcessIntentGetPhonenumberAsync(turnContext, luisResult, cancellationToken);
-            else if (INTENT_STAFF_OFFICE_HOURS.Equals(topIntent))
+            else if (IntentHelper.INTENT_STAFF_OFFICE_HOURS.Equals(topIntent))
                 await processStaffInformationIntents.ProcessIntentGetOfficeHoursAsync(turnContext, luisResult, cancellationToken);
-            else if (INTENT_STAFF_DEPARTMENT.Equals(topIntent))
+            else if (IntentHelper.INTENT_STAFF_DEPARTMENT.Equals(topIntent))
                 await processStaffInformationIntents.ProcessIntentGetDepartmentAsync(turnContext, luisResult, cancellationToken);
-            else if (INTENT_STAFF_ROOM.Equals(topIntent))
+            else if (IntentHelper.INTENT_STAFF_ROOM.Equals(topIntent))
                 await processStaffInformationIntents.ProcessIntentGetRoomAsync(turnContext, luisResult, cancellationToken);
         }
 
