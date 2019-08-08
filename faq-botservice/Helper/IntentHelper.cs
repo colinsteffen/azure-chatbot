@@ -7,7 +7,11 @@ namespace EchoBot.Helper
 {
     public static class IntentHelper
     {
+        //QnA Intents
+        public const string INTENT_QNA = "getQnA";
+
         //Personal Directory Intents
+        public const string INTENT_STAFF = "getEmail";
         public const string INTENT_STAFF_EMAIL = "getEmail";
         public const string INTENT_STAFF_PHONENUMBER = "getPhonenumber";
         public const string INTENT_STAFF_ROOM = "getRoom";
@@ -18,6 +22,7 @@ namespace EchoBot.Helper
         public const string INTENT_STAFF_STAFF_FROM_DEPARTMENT = "getStaffFromDepartment";
 
         //Courses Intents
+        public const string INTENT_COURSES = "getCourses";
         public const string INTENT_COURSES_COURSES_ALL = "getCourses";
         public const string INTENT_COURSES_MODULE_COMMISSIONER = "getModuleCommissioner";
         public const string INTENT_COURSES_MODULE_CONTENT = "getModuleContent";
@@ -26,7 +31,8 @@ namespace EchoBot.Helper
         public const string INTENT_COURSES_METHOD_OF_EXAMINATION = "getModuleMethodOfExamination";
 
         //Event Intent
-        public const string INTENT_EVENT_EVENTS_ALL = "getEvents"; //TODO
+        public const string INTENT_EVENTS = "getEvents";
+        public const string INTENT_EVENTS_EVENTS_ALL = "getEvents"; //TODO
 
         //Functionality Intents
         public const string INTENT_DESCRIBE_FUNCTIONALITY_FAQ = "FAQ";

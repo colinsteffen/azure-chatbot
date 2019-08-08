@@ -56,15 +56,22 @@ namespace EchoBot.Bots
             }
         }
 
+        //Gets the best Intent from the connectedt Dispatch
         private async Task DispatchToTopIntentAsync(ITurnContext<IMessageActivity> turnContext, string intent, RecognizerResult recognizerResult, CancellationToken cancellationToken)
         {
             switch (intent)
             {
-                case "getEmail":
+                case IntentHelper.INTENT_STAFF:
                     await ProcessGetStaffInformationAsync(turnContext, recognizerResult.Properties["luisResult"] as LuisResult, cancellationToken);
                     break;
-                case "getQnA":
+                case IntentHelper.INTENT_QNA:
                     await ProcessFHBielefeldQnAAsync(turnContext, cancellationToken);
+                    break;
+                case IntentHelper.INTENT_COURSES:
+                    await ProcessGetCourseInformationAsync(turnContext, recognizerResult.Properties["luisResult"] as LuisResult, cancellationToken);
+                    break;
+                case IntentHelper.INTENT_EVENTS:
+                    await ProcessGetEventInformationAsync(turnContext, recognizerResult.Properties["luisResult"] as LuisResult, cancellationToken);
                     break;
                 default:
                     _logger.LogInformation($"Dispatch unrecognized intent: {intent}.");
@@ -72,6 +79,8 @@ namespace EchoBot.Bots
                     break;
             }
         }
+
+        //Methods for processing the explicit Intents
 
         private async Task ProcessFHBielefeldQnAAsync(ITurnContext<IMessageActivity> turnContext, CancellationToken cancellationToken)
         {
@@ -103,5 +112,24 @@ namespace EchoBot.Bots
                 await processStaffInformationIntents.ProcessIntentGetRoomAsync(turnContext, luisResult, cancellationToken);
         }
 
+        private async Task ProcessGetEventInformationAsync(ITurnContext<IMessageActivity> turnContext, LuisResult luisResult, CancellationToken cancellationToken)
+        {
+            _logger.LogInformation("ProcessGetEventInformationAsync");
+
+            var result = luisResult.ConnectedServiceResult;
+            var topIntent = result.TopScoringIntent.Intent;
+
+            //TODO
+        }
+
+        private async Task ProcessGetCourseInformationAsync(ITurnContext<IMessageActivity> turnContext, LuisResult luisResult, CancellationToken cancellationToken)
+        {
+            _logger.LogInformation("ProcessGetCourseInformationAsync");
+
+            var result = luisResult.ConnectedServiceResult;
+            var topIntent = result.TopScoringIntent.Intent;
+
+            //TODO
+        }
     }
 }

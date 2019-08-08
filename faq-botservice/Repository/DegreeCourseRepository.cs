@@ -6,7 +6,7 @@ using EchoBot.Model;
 
 namespace EchoBot.Repository
 {
-    public class DegreeCourseRepository : IDegreeCourseRepository, IDisposable
+    public class DegreeCourseRepository : IDegreeCourseRepository
     {
         public IEnumerable<DegreeCourse> GetDegreeCourses()
         {
