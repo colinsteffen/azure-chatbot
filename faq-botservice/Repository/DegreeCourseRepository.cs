@@ -10,23 +10,15 @@ namespace EchoBot.Repository
 {
     public class DegreeCourseRepository : IDegreeCourseRepository
     {
+        private const string jsonDbFile = "Db/DegreeCourses.json";
+
         public IEnumerable<DegreeCourse> GetDegreeCourses()
         {
-            using(StreamReader r = new StreamReader("Db/DegreeCourses.json"))
+            using(StreamReader r = new StreamReader(jsonDbFile))
             {
                 string json = r.ReadToEnd();
                 return JsonConvert.DeserializeObject<List<DegreeCourse>>(json);
             }
-        }
-
-        public void InsertDegreeCourse(DegreeCourse degreeCourse)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Save()
-        {
-            throw new NotImplementedException();
         }
     }
 }

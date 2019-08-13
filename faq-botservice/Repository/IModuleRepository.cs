@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace EchoBot.Repository
 {
-    public interface IDegreeCourseRepository
+    public interface IModuleRepository
     {
-        IEnumerable<DegreeCourse> GetDegreeCourses();
+        IEnumerable<Module> GetModules();
     }
 }
