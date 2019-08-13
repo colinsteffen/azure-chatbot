@@ -4,29 +4,32 @@
     "DegreeLevel": "Master",
     "StudyModel": "Vollzeitstudiengang",
     "DurationOfStudy": 4,
-    "DepartmentId": -1,
+    "DepartmentId": 4,
     "PlaceOfStudy": -1,
-    "ModuleIds": [ 0, 1, 2 ],
-    "Title": "Wirtschaftsinformatik"
+    "ModuleIds": [ 0 ],
+    "Title": "Wirtschaftsinformatik",
+    "NumerusClausus": true
   },
   {
     "Id": 0,
     "DegreeLevel": "Bachelor",
     "StudyModel": "Vollzeitstudiengang",
     "DurationOfStudy": 4,
-    "DepartmentId": -1,
+    "DepartmentId": 4,
     "PlaceOfStudy": -1,
-    "ModuleIds": [ 0, 1, 2 ],
-    "Title": "Wirtschaftsinformatik"
+    "ModuleIds": [ ],
+    "Title": "Wirtschaftsinformatik",
+    "NumerusClausus": true
   },
   {
     "Id": 0,
     "DegreeLevel": "Bachelor",
     "StudyModel": "praxisintegrierter Studiengang",
     "DurationOfStudy": 4,
-    "DepartmentId": -1,
+    "DepartmentId": 4,
     "PlaceOfStudy": -1,
-    "ModuleIds": [ 0, 1, 2 ],
-    "Title": "Wirtschaftsinformatik"
+    "ModuleIds": [ ],
+    "Title": "Wirtschaftsinformatik",
+    "NumerusClausus": false
   }
 ]

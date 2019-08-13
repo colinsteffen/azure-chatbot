@@ -1,0 +1,27 @@
+[
+  {
+    "Id": 0,
+    "Name": "Gestaltung",
+    "DepartmentNumber":  1
+  },
+  {
+    "Id": 1,
+    "Name": "Campus Minden",
+    "DepartmentNumber": 2
+  },
+  {
+    "Id": 2,
+    "Name": "Ingenieurwissenschaften und Mathematik",
+    "DepartmentNumber": 3
+  },
+  {
+    "Id": 3,
+    "Name": "Sozialwesen",
+    "DepartmentNumber": 4
+  },
+  {
+    "Id": 4,
+    "Name": "Wirtschaft und Gesundheit",
+    "DepartmentNumber": 5
+  }
+]

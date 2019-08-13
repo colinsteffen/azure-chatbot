@@ -1,0 +1,50 @@
+[
+  {
+    "Id": 0,
+    "Street": "Interaktion",
+    "HouseNumber": "1",
+    "Postcode": 33619,
+    "City": "Bielefeld",
+    "Name": "Hauptgeb‰ude"
+  },
+  {
+    "Id": 1,
+    "Street": "Lampingstraﬂe",
+    "HouseNumber": "3",
+    "Postcode": 33615,
+    "City": "Bielefeld",
+    "Name": "Lampingstraﬂe"
+  },
+  {
+    "Id": 2,
+    "Street": "Universit‰tsstraﬂe",
+    "HouseNumber": "27",
+    "Postcode": 33615,
+    "City": "Bielefeld",
+    "Name": "Apparative Biotechnologie"
+  },
+  {
+    "Id": 3,
+    "Street": "Artilleriestraﬂe",
+    "HouseNumber": "9",
+    "Postcode": 32427,
+    "City": "Minden",
+    "Name": "Campus Minden"
+  },
+  {
+    "Id": 4,
+    "Street": "Langer Weg",
+    "HouseNumber": "9a",
+    "Postcode": 33332,
+    "City": "G¸tersloh",
+    "Name": "Gleis 13, Haus III"
+  },
+  {
+    "Id": 5,
+    "Street": "Schulstraﬂe",
+    "HouseNumber": "10",
+    "Postcode": 33330,
+    "City": "G¸tersloh",
+    "Name": "Schulstraﬂe"
+  }
+]  

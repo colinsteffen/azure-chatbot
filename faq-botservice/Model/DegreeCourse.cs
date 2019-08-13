@@ -17,5 +17,6 @@ namespace EchoBot.Model
         public int PlaceOfStudyId { get; set; }
         public List<int> ModuleIds { get; set; }
         public string Title { get; set; }
+        public bool NumerusClausus { get; set; }
     }
 }

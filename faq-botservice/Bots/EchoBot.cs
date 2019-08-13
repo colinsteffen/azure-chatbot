@@ -34,6 +34,8 @@ namespace EchoBot.Bots
 
         protected override async Task OnMessageActivityAsync(ITurnContext<IMessageActivity> turnContext, CancellationToken cancellationToken)
         {
+            if (processDegreeCourseIntents.WaitingForInformation)
+                await processDegreeCourseIntents.ProcessWaitingAsync(turnContext, cancellationToken);
             if (IntentHelper.INTENT_DESCRIBE_FUNCTIONALITY_FAQ.Equals(turnContext.Activity.Text.ToUpper()))
                 await turnContext.SendActivityAsync(MessageFactory.Text($"Stell einfach eine Frage an mich. Ich werde die Frage automatisch zuordnen und passend beantworten."), cancellationToken);
             else if (IntentHelper.INTENT_DESCRIBE_FUNCTIONALITY_PERSONAL_DIRECTORY.Equals(turnContext.Activity.Text.ToUpper()))
@@ -133,7 +135,18 @@ namespace EchoBot.Bots
             var result = luisResult.ConnectedServiceResult;
             var topIntent = result.TopScoringIntent.Intent;
 
-            //TODO
+            if (IntentHelper.INTENT_COURSES_COURSES_ALL.Equals(topIntent))
+                await processDegreeCourseIntents.ProcessIntentGetCoursesAsync(turnContext, luisResult, cancellationToken);
+            else if (IntentHelper.INTENT_COURSES_MODULE_COMMISSIONER.Equals(topIntent))
+                await processDegreeCourseIntents.ProcessIntentGetModuleCommissionerAsync(turnContext, luisResult, cancellationToken);
+            else if (IntentHelper.INTENT_COURSES_MODULE_CONTENT.Equals(topIntent))
+                await processDegreeCourseIntents.ProcessIntentGetModuleContentAsync(turnContext, luisResult, cancellationToken);
+            else if (IntentHelper.INTENT_COURSES_MODULE_INFORMATION.Equals(topIntent))
+                await processDegreeCourseIntents.ProcessIntentGetModuleInformationAsync(turnContext, luisResult, cancellationToken);
+            else if (IntentHelper.INTENT_COURSES_MODULE_LANGUAGE.Equals(topIntent))
+                await processDegreeCourseIntents.ProcessIntentGetModuleLanguageAsync(turnContext, luisResult, cancellationToken);
+            else if (IntentHelper.INTENT_COURSES_METHOD_OF_EXAMINATION.Equals(topIntent))
+                await processDegreeCourseIntents.ProcessIntentGetModuleMethodOfExaminationAsync(turnContext, luisResult, cancellationToken);
         }
     }
 }
