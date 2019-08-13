@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EchoBot.Repository
 {
-    public interface IDegreeCourseRepository : IDisposable
+    public interface IDegreeCourseRepository
     {
         IEnumerable<DegreeCourse> GetDegreeCourses();
         void InsertDegreeCourse(DegreeCourse degreeCourse);

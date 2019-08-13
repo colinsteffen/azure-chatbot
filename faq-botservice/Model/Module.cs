@@ -10,7 +10,7 @@ namespace EchoBot.Model
         public string Id { get; set; }
         public string Title { get; set; }
         public int CreditPoints { get; set; }
-        public Degree Level { get; set; }
+        public int DegreeId { get; set; }
         public int Duration { get; set; }
         public string Language { get; set; }
         public List<string> Content { get; set; }

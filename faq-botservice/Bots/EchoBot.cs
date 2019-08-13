@@ -16,6 +16,8 @@ namespace EchoBot.Bots
     public class EchoBot : ActivityHandler
     {
         private ProcessStaffInformationIntents processStaffInformationIntents;
+        private ProcessDegreeCourseIntents processDegreeCourseIntents;
+        private ProcessEventIntents processEventIntents;
 
         private ILogger<EchoBot> _logger;
         private IBotServices _botServices;
@@ -25,7 +27,9 @@ namespace EchoBot.Bots
             _logger = logger;
             _botServices = botServices;
 
-            processStaffInformationIntents = new ProcessStaffInformationIntents(_logger); ;
+            processStaffInformationIntents = new ProcessStaffInformationIntents(_logger);
+            processDegreeCourseIntents = new ProcessDegreeCourseIntents(_logger);
+            processEventIntents = new ProcessEventIntents(_logger);
         }
 
         protected override async Task OnMessageActivityAsync(ITurnContext<IMessageActivity> turnContext, CancellationToken cancellationToken)

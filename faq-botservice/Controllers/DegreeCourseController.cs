@@ -9,13 +9,17 @@ namespace EchoBot.Controllers
 {
     public class DegreeCourseController
     {
+        private IDegreeCourseRepository degreeCourseRepository;
+
         private List<DegreeCourse> degreeCourses;
-        private IDegreeCourseRepository repository;
+        private List<Department> departments;
+        private List<Module> modules;
+        private List<PlaceOfStudy> placesOfStudy;
 
         public DegreeCourseController()
         {
-            repository = new DegreeCourseRepository();
-            degreeCourses = repository.GetDegreeCourses().ToList();
+            degreeCourseRepository = new DegreeCourseRepository();
+            degreeCourses = degreeCourseRepository.GetDegreeCourses().ToList();
         }
     }
 }

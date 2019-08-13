@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using EchoBot.Model;
+using Newtonsoft.Json;
 
 namespace EchoBot.Repository
 {
@@ -10,7 +12,11 @@ namespace EchoBot.Repository
     {
         public IEnumerable<DegreeCourse> GetDegreeCourses()
         {
-            throw new NotImplementedException();
+            using(StreamReader r = new StreamReader("Db/DegreeCourses.json"))
+            {
+                string json = r.ReadToEnd();
+                return JsonConvert.DeserializeObject<List<DegreeCourse>>(json);
+            }
         }
 
         public void InsertDegreeCourse(DegreeCourse degreeCourse)
@@ -21,24 +27,6 @@ namespace EchoBot.Repository
         public void Save()
         {
             throw new NotImplementedException();
-        }
-
-        private bool disposed = false;
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!this.disposed)
-            {
-                //if (disposing)
-                    //context.Dispose(); //TODO
-            }
-            this.disposed = true;
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
         }
     }
 }

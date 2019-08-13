@@ -10,9 +10,12 @@ namespace EchoBot.Model
     {
         [Key]
         public int Id { get; set; }
-        public Degree Degree { get; set; }
+        public string DegreeLevel { get; set; }
+        public string StudyModel { get; set; }
         public int DurationOfStudy { get; set; }
-        public Department Department { get; set; }
-        public PlaceOfStudy PlaceOfStudy { get; set; }
+        public int DepartmentId { get; set; }
+        public int PlaceOfStudyId { get; set; }
+        public List<int> ModuleIds { get; set; }
+        public string Title { get; set; }
     }
 }
