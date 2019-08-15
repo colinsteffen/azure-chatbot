@@ -35,6 +35,7 @@ namespace EchoBot.Bots
             degreeCourseController = new DegreeCourseController();
         }
 
+        //Register all Methods that can wait for further Information
         public async Task ProcessWaitingAsync(ITurnContext<IMessageActivity> turnContext, CancellationToken cancellationToken)
         {
             _logger.LogInformation("ProcessWaitingAsync");
@@ -43,6 +44,8 @@ namespace EchoBot.Bots
 
             if (WaitingMethod.Equals("")) ; //Do Something
         }
+
+        //Process Intents
 
         public async Task ProcessIntentGetCoursesAsync(ITurnContext<IMessageActivity> turnContext, LuisResult luisResult, CancellationToken cancellationToken)
         {
