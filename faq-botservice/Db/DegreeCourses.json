@@ -40,7 +40,7 @@
     "DepartmentId": 4,
     "PlaceOfStudy": 0,
     "ModuleIds": [],
-    "Title": "Berufspädagogik Pflege und Therapie",
+    "Title": "Berufspaedagogik Pflege und Therapie",
     "NumerusClausus": true
   },
   {
@@ -84,7 +84,7 @@
     "DepartmentId": 4,
     "PlaceOfStudy": 0,
     "ModuleIds": [],
-    "Title": "Management für Ingenieur- und Naturwissenschaften",
+    "Title": "Management fuer Ingenieur- und Naturwissenschaften",
     "NumerusClausus": true
   },
   {
@@ -128,7 +128,7 @@
     "DepartmentId": 4,
     "PlaceOfStudy": 0,
     "ModuleIds": [],
-    "Title": "Steuern und Unternehmensprüfung",
+    "Title": "Steuern und Unternehmenspruefung",
     "NumerusClausus": true
   },
   {

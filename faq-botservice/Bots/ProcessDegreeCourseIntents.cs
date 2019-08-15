@@ -1,4 +1,7 @@
 ﻿using EchoBot.Controllers;
+using EchoBot.Dialogs;
+using EchoBot.Helper;
+using EchoBot.Model;
 using Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime.Models;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Schema;
@@ -23,6 +26,7 @@ namespace EchoBot.Bots
         private int LastModuleId;
         private int LastDegreeCourseId;
         private int LastDepartmentId;
+        private string LastDegreeLevel;
 
         public ProcessDegreeCourseIntents(ILogger<EchoBot> logger)
         {
@@ -54,8 +58,16 @@ namespace EchoBot.Bots
             if (luisResult != null) {
                 if (luisResult.ConnectedServiceResult.Entities.Count() > 0)
                 {
-                    EntityModel em = luisResult.ConnectedServiceResult.Entities[0];
-                    //TODO
+                    foreach (EntityModel em in luisResult.ConnectedServiceResult.Entities)
+                    {
+                        if (EntityHelper.ENTITY_DEGREE.Equals(em.Type))
+                            LastDegreeLevel = em.Entity;
+                        else if (EntityHelper.ENTITY_DEPARTMENT.Equals(em.Type))
+                            LastDepartmentId = degreeCourseController.GetDepartmentIdFromName(em.Entity);
+                    }
+
+                    List<DegreeCourse> degreeCoursesFiltered = degreeCourseController.GetFilteredDegreeCourses(LastDepartmentId, LastDegreeLevel);
+                    await turnContext.SendActivityAsync(MessageFactory.Text(DegreeCourseIntentDialogs.DialogGetDegreeCourses(degreeCoursesFiltered)), cancellationToken);
                 }
             }
         }
