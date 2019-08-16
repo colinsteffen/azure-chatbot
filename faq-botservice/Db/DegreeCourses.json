@@ -152,5 +152,115 @@
     "ModuleIds": [],
     "Title": "Wirtschaftsrecht Vertragsgestaltung",
     "NumerusClausus": true
+  },
+  {
+    "Id": 14,
+    "DegreeLevel": "Bachelor",
+    "StudyModel": "Verbundstudiengang (berufsbegleitend)",
+    "DurationOfStudy": 9,
+    "DepartmentId": 4,
+    "PlaceOfStudy": 0,
+    "ModuleIds": [],
+    "Title": "Betriebswirtschaft",
+    "NumerusClausus": true
+  },
+  {
+    "Id": 15,
+    "DegreeLevel": "Bachelor",
+    "StudyModel": "Verbundstudiengang (berufsbegleitend)",
+    "DurationOfStudy": 9,
+    "DepartmentId": 4,
+    "PlaceOfStudy": 4,
+    "ModuleIds": [],
+    "Title": "Betriebswirtschaft",
+    "NumerusClausus": true
+  },
+  {
+    "Id": 16,
+    "DegreeLevel": "Bachelor",
+    "StudyModel": "Vollzeitstudiengang",
+    "DurationOfStudy": 6,
+    "DepartmentId": 4,
+    "PlaceOfStudy": 0,
+    "ModuleIds": [],
+    "Title": "Betriebswirtschaftslehre",
+    "NumerusClausus": true
+  },
+  {
+    "Id": 17,
+    "DegreeLevel": "Bachelor",
+    "StudyModel": "Vollzeitstudiengang",
+    "DurationOfStudy": 6,
+    "DepartmentId": 4,
+    "PlaceOfStudy": 0,
+    "ModuleIds": [],
+    "Title": "Wirtschaftsinformatik",
+    "NumerusClausus": true
+  },
+  {
+    "Id": 18,
+    "DegreeLevel": "Bachelor",
+    "StudyModel": "praxisintegrierter Studiengang",
+    "DurationOfStudy": 7,
+    "DepartmentId": 4,
+    "PlaceOfStudy": 0,
+    "ModuleIds": [],
+    "Title": "Betriebswirtschaftslehre",
+    "NumerusClausus": true
+  },
+  {
+    "Id": 19,
+    "DegreeLevel": "Bachelor",
+    "StudyModel": "Vollzeitstudiengang",
+    "DurationOfStudy": 6,
+    "DepartmentId": 4,
+    "PlaceOfStudy": 0,
+    "ModuleIds": [],
+    "Title": "Gesundheit",
+    "NumerusClausus": false
+  },
+  {
+    "Id": 20,
+    "DegreeLevel": "Bachelor",
+    "StudyModel": "Vollzeitstudiengang",
+    "DurationOfStudy": 6,
+    "DepartmentId": 4,
+    "PlaceOfStudy": 0,
+    "ModuleIds": [],
+    "Title": "International Studies in Management",
+    "NumerusClausus": true
+  },
+  {
+    "Id": 21,
+    "DegreeLevel": "Bachelor",
+    "StudyModel": "dualer Studiengang",
+    "DurationOfStudy": 8,
+    "DepartmentId": 4,
+    "PlaceOfStudy": 0,
+    "ModuleIds": [],
+    "Title": "Pflege",
+    "NumerusClausus": false
+  },
+  {
+    "Id": 22,
+    "DegreeLevel": "Bachelor",
+    "StudyModel": "dualer Studiengang",
+    "DurationOfStudy": 8,
+    "DepartmentId": 4,
+    "PlaceOfStudy": 3,
+    "ModuleIds": [],
+    "Title": "Pflege",
+    "NumerusClausus": false
+  },
+  {
+    "Id": 23,
+    "DegreeLevel": "Bachelor",
+    "StudyModel": "Vollzeitstudiengang",
+    "DurationOfStudy": 6,
+    "DepartmentId": 4,
+    "PlaceOfStudy": 0,
+    "ModuleIds": [],
+    "Title": "Wirtschaftspsychologie",
+    "NumerusClausus": true
   }
 ]
