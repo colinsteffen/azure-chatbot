@@ -39,16 +39,18 @@ namespace EchoBot.Bots
             if (IntentHelper.INTENT_DESCRIBE_FUNCTIONALITY_FAQ.Equals(turnContext.Activity.Text.ToUpper()))
                 await turnContext.SendActivityAsync(MessageFactory.Text($"Stell einfach eine Frage an mich. Ich werde die Frage automatisch zuordnen und passend beantworten."), cancellationToken);
             else if (IntentHelper.INTENT_DESCRIBE_FUNCTIONALITY_PERSONAL_DIRECTORY.Equals(turnContext.Activity.Text.ToUpper()))
-                await turnContext.SendActivityAsync(MessageFactory.Text($"Ich beantworte dir gerne Fragen zu dem Personal der FH Bielefeld. Schreib einfach eine Frage zu den folgenden Inhalten:\n\nE-Mail\nTelefonnummer\nFachbereich\nRaum\nSprechzeiten\n\n mit dem Namen des Mitarbeiters."), cancellationToken);
+                await turnContext.SendActivityAsync(MessageFactory.Text($"Ich beantworte dir gerne Fragen zu dem Personal der FH Bielefeld. " +
+                    $"Schreib einfach eine Frage zu den folgenden Inhalten:" +
+                    $"\n\nE-Mail\nTelefonnummer\nFachbereich\nRaum\nSprechzeiten\n\n mit dem Namen des Mitarbeiters."), cancellationToken);
+            else if (IntentHelper.INTENT_DESCRIBE_FUNCTIONALITY_COURSES.Equals(turnContext.Activity.Text.ToUpper()))
+                await turnContext.SendActivityAsync(MessageFactory.Text($"Ich beantworte dir gerne Fragen zu Studiengängen und dazugehörigen Modulen. " +
+                    $"\nSchreib einfach eine Frage zu Studiengängen und Modulen der Fachhochschule Bielefeld" +
+                    $"\nDies kann z. B. eine Liste mit allen Studiengängen aus einem Fachbereich sein oder der Inhalt eines Moduls."), cancellationToken);
             else
             {
-                // First, we use the dispatch model to determine which cognitive service (LUIS or QnA) to use.
                 var recognizerResult = await _botServices.Dispatch.RecognizeAsync(turnContext, cancellationToken);
-
-                // Top intent tell us which cognitive service to use.
                 var topIntent = recognizerResult.GetTopScoringIntent();
 
-                // Next, we call the dispatcher with the top intent.
                 await DispatchToTopIntentAsync(turnContext, topIntent.intent, recognizerResult, cancellationToken);
             }
         }
@@ -58,7 +60,12 @@ namespace EchoBot.Bots
             foreach (var member in membersAdded)
             {
                 if (member.Id != turnContext.Activity.Recipient.Id)
-                    await turnContext.SendActivityAsync(MessageFactory.Text($"Willkommen zum Bot der FH Bielefeld!\n\nDer Bot beantwortet dir zu folgenden Themen Fragen:\n\n-FAQ Fragen\n-Informationen aus dem Personenverzeichnis\n\n\n\nWenn du Fragen zu dem Vorgehen hast schreibe 'FAQ' oder 'Personenverzeichnis' um weitere Informationen zu erhalten."), cancellationToken);
+                    await turnContext.SendActivityAsync(MessageFactory.Text($"Willkommen zum Bot der FH Bielefeld!\n\n" +
+                        $"Der Bot beantwortet dir zu folgenden Themen Fragen:" +
+                        $"\n\n-FAQ Fragen" +
+                        $"\n-Informationen aus dem Personenverzeichnis" +
+                        $"\n-Informationen zu Studiengängen sowie zugehörifen Modulen" +
+                        $"\n\n\n\nWenn du Fragen zu dem Vorgehen hast schreibe 'FAQ', 'Personenverzeichnis' oder 'Studiengänge' um weitere Informationen zu erhalten."), cancellationToken);
             }
         }
 
