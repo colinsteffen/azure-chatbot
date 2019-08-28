@@ -10,6 +10,7 @@ using Microsoft.Bot.Connector.Authentication;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using EchoBot;
+using EchoBot.Dialogs;
 
 namespace Microsoft.BotBuilderSamples
 {
@@ -38,24 +39,32 @@ namespace Microsoft.BotBuilderSamples
             // Create the Bot Framework Adapter.
             services.AddSingleton<IBotFrameworkHttpAdapter, BotFrameworkHttpAdapter>();
 
+            // Create the storage we'll be using for User and Conversation state. (Memory is great for testing purposes.)
+            services.AddSingleton<IStorage, MemoryStorage>();
+
+            // Create the User state. (Used in this bot's Dialog implementation.)
+            services.AddSingleton<UserState>();
+
+            // Create the Conversation state. (Used by the Dialog system itself.)
+            services.AddSingleton<ConversationState>();
+
             // Create the bot services (LUIS, QnA) as a singleton.
             services.AddSingleton<IBotServices, BotServices>();
 
+            // The Dialog that will be run by the bot.
+            services.AddSingleton<ModuleDialog>();
+
             // Create the bot as a transient. In this case the ASP Controller is expecting an IBot.
-            services.AddTransient<IBot, EchoBot.Bots.EchoBot>();
+            services.AddTransient<IBot, EchoBot.Bots.EchoBot<ModuleDialog>>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
-            {
                 app.UseDeveloperExceptionPage();
-            }
             else
-            {
                 app.UseHsts();
-            }
 
             app.UseDefaultFiles();
             app.UseStaticFiles();

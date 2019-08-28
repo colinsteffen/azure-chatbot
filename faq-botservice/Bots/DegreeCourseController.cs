@@ -32,6 +32,7 @@ namespace EchoBot.Controllers
             placesOfStudy = placeOfStudyRepository.GetPlacesOfStudy().ToList();
         }
 
+        //Degree Courses
         public List<DegreeCourse> GetFilteredDegreeCourses(int departmentId, string degreeLevel)
         {
             List<DegreeCourse> degreeCoursesFiltered = new List<DegreeCourse>();
@@ -61,12 +62,30 @@ namespace EchoBot.Controllers
             return ids.First();
         }
 
+        //Department
         public int GetDepartmentIdFromName(string name)
         {
             List<int> ids = (from dc in departments
                              where dc.Name.ToLower().Contains(name.ToLower())
                              select dc.Id).ToList();
             return ids.First();
+        }
+
+        //Modules
+        public string getModuleIdFromName(string name)
+        {
+            List<string> ids = (from m in modules
+                             where m.Title.ToLower().Contains(name.ToLower())
+                             select m.Id).ToList();
+            return ids.First();
+        }
+
+        public Module getModule(string id)
+        {
+            List<Module> moduleList = (from m in modules
+                                where m.Id.ToLower().Contains(id.ToLower())
+                                select m).ToList();
+            return moduleList.First();
         }
     }
 }

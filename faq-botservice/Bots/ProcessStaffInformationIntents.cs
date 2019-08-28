@@ -16,17 +16,17 @@ namespace EchoBot.Bots
     {
         private const string ENTITY_PERSON_NACHNAME = "personNachname";
 
-        private ILogger<EchoBot> _logger;
+        private ILogger _logger;
         private StaffInformationController staffInformationController;
 
-        public ProcessStaffInformationIntents(ILogger<EchoBot> logger)
+        public ProcessStaffInformationIntents(ILogger logger)
         {
             this._logger = logger;
 
             staffInformationController = new StaffInformationController();
         }
 
-        public async Task ProcessIntentGetEmailAsync(ITurnContext<IMessageActivity> turnContext, LuisResult luisResult, CancellationToken cancellationToken)
+        public async Task ProcessIntentGetEmailAsync(ITurnContext turnContext, LuisResult luisResult, CancellationToken cancellationToken)
         {
             _logger.LogInformation("ProcessIntentGetEmailAsync");
 
@@ -48,7 +48,7 @@ namespace EchoBot.Bots
                 await turnContext.SendActivityAsync(MessageFactory.Text($"Ich brauche einen Namen zu dem ich eine Email finden soll."), cancellationToken);
         }
 
-        public async Task ProcessIntentGetPhonenumberAsync(ITurnContext<IMessageActivity> turnContext, LuisResult luisResult, CancellationToken cancellationToken)
+        public async Task ProcessIntentGetPhonenumberAsync(ITurnContext turnContext, LuisResult luisResult, CancellationToken cancellationToken)
         {
             _logger.LogInformation("ProcessIntentGetPhonenumberAsync");
 
@@ -70,7 +70,7 @@ namespace EchoBot.Bots
                 await turnContext.SendActivityAsync(MessageFactory.Text($"Ich brauche einen Namen zu dem ich eine Telefonnummer finden soll."), cancellationToken);
         }
 
-        public async Task ProcessIntentGetOfficeHoursAsync(ITurnContext<IMessageActivity> turnContext, LuisResult luisResult, CancellationToken cancellationToken)
+        public async Task ProcessIntentGetOfficeHoursAsync(ITurnContext turnContext, LuisResult luisResult, CancellationToken cancellationToken)
         {
             _logger.LogInformation("ProcessIntentGetOfficeAsync");
 
@@ -92,7 +92,7 @@ namespace EchoBot.Bots
                 await turnContext.SendActivityAsync(MessageFactory.Text($"Ich brauche einen Namen zu dem ich Sprechzeiten finden soll."), cancellationToken);
         }
 
-        public async Task ProcessIntentGetDepartmentAsync(ITurnContext<IMessageActivity> turnContext, LuisResult luisResult, CancellationToken cancellationToken)
+        public async Task ProcessIntentGetDepartmentAsync(ITurnContext turnContext, LuisResult luisResult, CancellationToken cancellationToken)
         {
             _logger.LogInformation("ProcessIntentGetDepartmentAsync");
 
@@ -114,7 +114,7 @@ namespace EchoBot.Bots
                 await turnContext.SendActivityAsync(MessageFactory.Text($"Ich brauche einen Namen zu dem ich einen Fachbereich finden soll."), cancellationToken);
         }
 
-        public async Task ProcessIntentGetRoomAsync(ITurnContext<IMessageActivity> turnContext, LuisResult luisResult, CancellationToken cancellationToken)
+        public async Task ProcessIntentGetRoomAsync(ITurnContext turnContext, LuisResult luisResult, CancellationToken cancellationToken)
         {
             _logger.LogInformation("ProcessIntentGetRoomAsync");
 

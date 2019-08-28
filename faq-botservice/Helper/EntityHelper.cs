@@ -9,5 +9,7 @@ namespace EchoBot.Helper
     {
         public const string ENTITY_DEGREE = "degree";
         public const string ENTITY_DEPARTMENT = "department";
+        public const string ENTITY_MODULE = "module";
+        public const string ENTITY_COURSE = "course";
     }
 }

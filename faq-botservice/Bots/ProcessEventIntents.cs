@@ -9,10 +9,10 @@ namespace EchoBot.Bots
 {
     public class ProcessEventIntents
     {
-        private ILogger<EchoBot> _logger;
+        private ILogger _logger;
         private EventController eventController;
 
-        public ProcessEventIntents(ILogger<EchoBot> logger)
+        public ProcessEventIntents(ILogger logger)
         {
             this._logger = logger;
 

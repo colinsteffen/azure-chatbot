@@ -29,6 +29,7 @@ namespace EchoBot.Helper
         public const string INTENT_COURSES_MODULE_INFORMATION = "getModuleInformation";
         public const string INTENT_COURSES_MODULE_LANGUAGE = "getModuleLanguage";
         public const string INTENT_COURSES_METHOD_OF_EXAMINATION = "getModuleMethodOfExamination";
+        public const string INTENT_COURSES_APPLY_INFORMATION = "getApplyInformation";
 
         //Event Intent
         public const string INTENT_EVENTS = "getEvents";
@@ -38,6 +39,6 @@ namespace EchoBot.Helper
         public const string INTENT_DESCRIBE_FUNCTIONALITY_FAQ = "FAQ";
         public const string INTENT_DESCRIBE_FUNCTIONALITY_PERSONAL_DIRECTORY = "PERSONENVERZEICHNIS";
         public const string INTENT_DESCRIBE_FUNCTIONALITY_EVENTS = "EVENTS"; //TODO
-        public const string INTENT_DESCRIBE_FUNCTIONALITY_COURSES = "COURSES"; //TODO
+        public const string INTENT_DESCRIBE_FUNCTIONALITY_COURSES = "COURSES"; 
     }
 }

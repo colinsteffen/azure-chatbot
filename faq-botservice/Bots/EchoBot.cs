@@ -10,33 +10,46 @@ using System.Linq;
 using Microsoft.Extensions.Logging;
 using Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime.Models;
 using EchoBot.Helper;
+using Microsoft.Bot.Builder.Dialogs;
 
 namespace EchoBot.Bots
 {
-    public class EchoBot : ActivityHandler
+    public class EchoBot<T> : ActivityHandler where T : Dialog
     {
         private ProcessStaffInformationIntents processStaffInformationIntents;
         private ProcessDegreeCourseIntents processDegreeCourseIntents;
         private ProcessEventIntents processEventIntents;
 
-        private ILogger<EchoBot> _logger;
+        protected readonly Dialog Dialog;
+        protected readonly BotState ConversationState;
+        protected readonly BotState UserState;
+        protected readonly ILogger Logger;
         private IBotServices _botServices;
 
-        public EchoBot(IBotServices botServices, ILogger<EchoBot> logger)
+        public EchoBot(IBotServices botServices, ConversationState conversationState, UserState userState, T dialog, ILogger<EchoBot<T>> logger)
         {
-            _logger = logger;
+            Logger = logger;
             _botServices = botServices;
+            this.Dialog = dialog;
+            ConversationState = conversationState;
+            UserState = userState;
 
-            processStaffInformationIntents = new ProcessStaffInformationIntents(_logger);
-            processDegreeCourseIntents = new ProcessDegreeCourseIntents(_logger);
-            processEventIntents = new ProcessEventIntents(_logger);
+            processStaffInformationIntents = new ProcessStaffInformationIntents(Logger);
+            processDegreeCourseIntents = new ProcessDegreeCourseIntents(Logger, this.Dialog, this.ConversationState, this.UserState);
+            processEventIntents = new ProcessEventIntents(Logger);
         }
 
-        protected override async Task OnMessageActivityAsync(ITurnContext<IMessageActivity> turnContext, CancellationToken cancellationToken)
+        public override async Task OnTurnAsync(ITurnContext turnContext, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (processDegreeCourseIntents.WaitingForInformation)
+            await base.OnTurnAsync(turnContext, cancellationToken);
+
+            // Save any state changes that might have occured during the turn.
+            await ConversationState.SaveChangesAsync(turnContext, false, cancellationToken);
+            await UserState.SaveChangesAsync(turnContext, false, cancellationToken);
+
+            if (StateHelper.DegreeCourseIntent.WaitingForInformation)
                 await processDegreeCourseIntents.ProcessWaitingAsync(turnContext, cancellationToken);
-            if (IntentHelper.INTENT_DESCRIBE_FUNCTIONALITY_FAQ.Equals(turnContext.Activity.Text.ToUpper()))
+            else if (IntentHelper.INTENT_DESCRIBE_FUNCTIONALITY_FAQ.Equals(turnContext.Activity.Text.ToUpper()))
                 await turnContext.SendActivityAsync(MessageFactory.Text($"Stell einfach eine Frage an mich. Ich werde die Frage automatisch zuordnen und passend beantworten."), cancellationToken);
             else if (IntentHelper.INTENT_DESCRIBE_FUNCTIONALITY_PERSONAL_DIRECTORY.Equals(turnContext.Activity.Text.ToUpper()))
                 await turnContext.SendActivityAsync(MessageFactory.Text($"Ich beantworte dir gerne Fragen zu dem Personal der FH Bielefeld. " +
@@ -55,6 +68,11 @@ namespace EchoBot.Bots
             }
         }
 
+        protected override async Task OnMessageActivityAsync(ITurnContext<IMessageActivity> turnContext, CancellationToken cancellationToken = default(CancellationToken))
+        {
+
+        }
+
         protected override async Task OnMembersAddedAsync(IList<ChannelAccount> membersAdded, ITurnContext<IConversationUpdateActivity> turnContext, CancellationToken cancellationToken)
         {
             foreach (var member in membersAdded)
@@ -70,7 +88,7 @@ namespace EchoBot.Bots
         }
 
         //Gets the best Intent from the connectedt Dispatch
-        private async Task DispatchToTopIntentAsync(ITurnContext<IMessageActivity> turnContext, string intent, RecognizerResult recognizerResult, CancellationToken cancellationToken)
+        private async Task DispatchToTopIntentAsync(ITurnContext turnContext, string intent, RecognizerResult recognizerResult, CancellationToken cancellationToken)
         {
             switch (intent)
             {
@@ -87,7 +105,7 @@ namespace EchoBot.Bots
                     await ProcessGetEventInformationAsync(turnContext, recognizerResult.Properties["luisResult"] as LuisResult, cancellationToken);
                     break;
                 default:
-                    _logger.LogInformation($"Dispatch unrecognized intent: {intent}.");
+                    Logger.LogInformation($"Dispatch unrecognized intent: {intent}.");
                     await turnContext.SendActivityAsync(MessageFactory.Text($"Dispatch unrecognized intent: {intent}."), cancellationToken);
                     break;
             }
@@ -95,9 +113,9 @@ namespace EchoBot.Bots
 
         //Methods for processing the explicit Intents
 
-        private async Task ProcessFHBielefeldQnAAsync(ITurnContext<IMessageActivity> turnContext, CancellationToken cancellationToken)
+        private async Task ProcessFHBielefeldQnAAsync(ITurnContext turnContext, CancellationToken cancellationToken)
         {
-            _logger.LogInformation("ProcessSampleQnAAsync");
+            Logger.LogInformation("ProcessSampleQnAAsync");
 
             var results = await _botServices.FHBielefeldQnA.GetAnswersAsync(turnContext);
             if (results.Any())
@@ -106,9 +124,9 @@ namespace EchoBot.Bots
                 await turnContext.SendActivityAsync(MessageFactory.Text("Sorry, could not find an answer in the Q and A system."), cancellationToken);
         }
 
-        private async Task ProcessGetStaffInformationAsync(ITurnContext<IMessageActivity> turnContext, LuisResult luisResult, CancellationToken cancellationToken)
+        private async Task ProcessGetStaffInformationAsync(ITurnContext turnContext, LuisResult luisResult, CancellationToken cancellationToken)
         {
-            _logger.LogInformation("ProcessGetStaffInformationAsync");
+            Logger.LogInformation("ProcessGetStaffInformationAsync");
 
             var result = luisResult.ConnectedServiceResult;
             var topIntent = result.TopScoringIntent.Intent;
@@ -125,9 +143,9 @@ namespace EchoBot.Bots
                 await processStaffInformationIntents.ProcessIntentGetRoomAsync(turnContext, luisResult, cancellationToken);
         }
 
-        private async Task ProcessGetEventInformationAsync(ITurnContext<IMessageActivity> turnContext, LuisResult luisResult, CancellationToken cancellationToken)
+        private async Task ProcessGetEventInformationAsync(ITurnContext turnContext, LuisResult luisResult, CancellationToken cancellationToken)
         {
-            _logger.LogInformation("ProcessGetEventInformationAsync");
+            Logger.LogInformation("ProcessGetEventInformationAsync");
 
             var result = luisResult.ConnectedServiceResult;
             var topIntent = result.TopScoringIntent.Intent;
@@ -135,9 +153,9 @@ namespace EchoBot.Bots
             //TODO
         }
 
-        private async Task ProcessGetCourseInformationAsync(ITurnContext<IMessageActivity> turnContext, LuisResult luisResult, CancellationToken cancellationToken)
+        private async Task ProcessGetCourseInformationAsync(ITurnContext turnContext, LuisResult luisResult, CancellationToken cancellationToken)
         {
-            _logger.LogInformation("ProcessGetCourseInformationAsync");
+            Logger.LogInformation("ProcessGetCourseInformationAsync");
 
             var result = luisResult.ConnectedServiceResult;
             var topIntent = result.TopScoringIntent.Intent;
