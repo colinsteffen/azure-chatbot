@@ -5,15 +5,12 @@ using EchoBot.Model;
 using Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime.Models;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
-using Microsoft.Bot.Schema;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Bot.Builder.Community.Dialogs.FormFlow;
-using Bot.Builder.Community.Dialogs.Prompts;
 
 namespace EchoBot.Bots
 {

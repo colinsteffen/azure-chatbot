@@ -8,7 +8,7 @@ namespace EchoBot.Helper
     public static class IntentHelper
     {
         //QnA Intents
-        public const string INTENT_QNA = "getQnA";
+        public const string INTENT_QNA = "q_Faq";
 
         //Personal Directory Intents
         public const string INTENT_STAFF = "getEmail";
