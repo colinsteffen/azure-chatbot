@@ -37,10 +37,16 @@ namespace EchoBot.Bots
         {
             _logger.LogInformation("ProcessWaitingAsync");
 
-            string message = turnContext.Activity.Text;
-
             if (StateHelper.DegreeCourseIntent.WaitingMethod.Equals("ProcessIntentGetModuleCommissionerAsync"))
                 await ProcessIntentGetModuleCommissionerAsync(turnContext, null, cancellationToken);
+            else if(StateHelper.DegreeCourseIntent.WaitingMethod.Equals("ProcessIntentGetModuleContentAsync"))
+                await ProcessIntentGetModuleContentAsync(turnContext, null, cancellationToken);
+            else if (StateHelper.DegreeCourseIntent.WaitingMethod.Equals("ProcessIntentGetModuleInformationAsync"))
+                await ProcessIntentGetModuleInformationAsync(turnContext, null, cancellationToken);
+            else if (StateHelper.DegreeCourseIntent.WaitingMethod.Equals("ProcessIntentGetModuleLanguageAsync"))
+                await ProcessIntentGetModuleLanguageAsync(turnContext, null, cancellationToken);
+            else if (StateHelper.DegreeCourseIntent.WaitingMethod.Equals("ProcessIntentGetModuleLanguageAsync"))
+                await ProcessIntentGetModuleLanguageAsync(turnContext, null, cancellationToken);
         }
 
         public async Task SetToNotWaiting()
@@ -95,9 +101,6 @@ namespace EchoBot.Bots
 
                 if (string.IsNullOrEmpty(StateHelper.DegreeCourseIntent.LastModuleId))
                 {
-                    // Run the Dialog with the new message Activity.
-                    //await this.Dialog.RunAsync(turnContext, ConversationState.CreateProperty<DialogState>(nameof(DialogState)), cancellationToken); //Todo 
-
                     StateHelper.DegreeCourseIntent.WaitingForInformation = true;
                     StateHelper.DegreeCourseIntent.WaitingVariable = "ModuleId";
                     StateHelper.DegreeCourseIntent.WaitingMethod = "ProcessIntentGetModuleCommissionerAsync";
@@ -117,21 +120,124 @@ namespace EchoBot.Bots
         {
             _logger.LogInformation("ProcessIntentGetModuleContentAsync");
 
-            //TODO
+            if (StateHelper.DegreeCourseIntent.WaitingForInformation)
+            {
+                StateHelper.DegreeCourseIntent.LastModuleId = degreeCourseController.getModuleIdFromName(turnContext.Activity.Text);
+                await SetToNotWaiting();
+            }
+
+            if (luisResult != null)
+            {
+                if (luisResult.ConnectedServiceResult.Entities.Count() > 0)
+                {
+                    foreach (EntityModel em in luisResult.ConnectedServiceResult.Entities)
+                    {
+                        if (EntityHelper.ENTITY_MODULE.Equals(em.Type))
+                            StateHelper.DegreeCourseIntent.LastModuleId = degreeCourseController.getModuleIdFromName(em.Entity);
+                    }
+                }
+
+                if (string.IsNullOrEmpty(StateHelper.DegreeCourseIntent.LastModuleId))
+                {
+                    StateHelper.DegreeCourseIntent.WaitingForInformation = true;
+                    StateHelper.DegreeCourseIntent.WaitingVariable = "ModuleId";
+                    StateHelper.DegreeCourseIntent.WaitingMethod = "ProcessIntentGetModuleContentAsync";
+
+                    await turnContext.SendActivityAsync(MessageFactory.Text($"Für welches Modul soll ich den Inhalt suchen?"), cancellationToken);
+                }
+            }
+
+            if (!StateHelper.DegreeCourseIntent.WaitingForInformation)
+            {
+                Module searchedModule = degreeCourseController.getModule(StateHelper.DegreeCourseIntent.LastModuleId);
+                string text = $"Das Modul {searchedModule.Title} hat die folgenden Inhalte:";
+                foreach (string s in searchedModule.Content)
+                    text += $"\n-{s}";
+                await turnContext.SendActivityAsync(MessageFactory.Text(text), cancellationToken);
+            }
         }
 
         public async Task ProcessIntentGetModuleInformationAsync(ITurnContext turnContext, LuisResult luisResult, CancellationToken cancellationToken)
         {
             _logger.LogInformation("ProcessIntentGetModuleInformationAsync");
 
-            //TODO
+            if (StateHelper.DegreeCourseIntent.WaitingForInformation)
+            {
+                StateHelper.DegreeCourseIntent.LastModuleId = degreeCourseController.getModuleIdFromName(turnContext.Activity.Text);
+                await SetToNotWaiting();
+            }
+
+            if (luisResult != null)
+            {
+                if (luisResult.ConnectedServiceResult.Entities.Count() > 0)
+                {
+                    foreach (EntityModel em in luisResult.ConnectedServiceResult.Entities)
+                    {
+                        if (EntityHelper.ENTITY_MODULE.Equals(em.Type))
+                            StateHelper.DegreeCourseIntent.LastModuleId = degreeCourseController.getModuleIdFromName(em.Entity);
+                    }
+                }
+
+                if (string.IsNullOrEmpty(StateHelper.DegreeCourseIntent.LastModuleId))
+                {
+                    StateHelper.DegreeCourseIntent.WaitingForInformation = true;
+                    StateHelper.DegreeCourseIntent.WaitingVariable = "ModuleId";
+                    StateHelper.DegreeCourseIntent.WaitingMethod = "ProcessIntentGetModuleInformationAsync";
+
+                    await turnContext.SendActivityAsync(MessageFactory.Text($"Für welches Modul soll ich Informationen suchen?"), cancellationToken);
+                }
+            }
+
+            if (!StateHelper.DegreeCourseIntent.WaitingForInformation)
+            {
+                Module searchedModule = degreeCourseController.getModule(StateHelper.DegreeCourseIntent.LastModuleId);
+                string text = $"Ich habe folgende Informationen zu dem Modul {searchedModule.Title} gefunden:";
+                text += $"\n-Beauftragter: {searchedModule.Commissioner}";
+                text += $"\n-Abschluss: {searchedModule.DegreeLevel}";
+                text += $"\n-Credit Points: {searchedModule.CreditPoints}";
+                text += $"\n-Inhalt:";
+                foreach (string s in searchedModule.Content)
+                    text += $"\n-{s}";
+                await turnContext.SendActivityAsync(MessageFactory.Text(text), cancellationToken);
+            }
         }
 
         public async Task ProcessIntentGetModuleLanguageAsync(ITurnContext turnContext, LuisResult luisResult, CancellationToken cancellationToken)
         {
             _logger.LogInformation("ProcessIntentGetModuleLanguageAsync");
 
-            //TODO
+            if (StateHelper.DegreeCourseIntent.WaitingForInformation)
+            {
+                StateHelper.DegreeCourseIntent.LastModuleId = degreeCourseController.getModuleIdFromName(turnContext.Activity.Text);
+                await SetToNotWaiting();
+            }
+
+            if (luisResult != null)
+            {
+                if (luisResult.ConnectedServiceResult.Entities.Count() > 0)
+                {
+                    foreach (EntityModel em in luisResult.ConnectedServiceResult.Entities)
+                    {
+                        if (EntityHelper.ENTITY_MODULE.Equals(em.Type))
+                            StateHelper.DegreeCourseIntent.LastModuleId = degreeCourseController.getModuleIdFromName(em.Entity);
+                    }
+                }
+
+                if (string.IsNullOrEmpty(StateHelper.DegreeCourseIntent.LastModuleId))
+                {
+                    StateHelper.DegreeCourseIntent.WaitingForInformation = true;
+                    StateHelper.DegreeCourseIntent.WaitingVariable = "ModuleId";
+                    StateHelper.DegreeCourseIntent.WaitingMethod = "ProcessIntentGetModuleLanguageAsync";
+
+                    await turnContext.SendActivityAsync(MessageFactory.Text($"Für welches Modul soll ich die Sprache suchen?"), cancellationToken);
+                }
+            }
+
+            if (!StateHelper.DegreeCourseIntent.WaitingForInformation)
+            {
+                Module searchedModule = degreeCourseController.getModule(StateHelper.DegreeCourseIntent.LastModuleId);
+                await turnContext.SendActivityAsync(MessageFactory.Text($"Das Modul {searchedModule.Title} wird in der Sprache {searchedModule.Language} gehalten."), cancellationToken);
+            }
         }
 
         public async Task ProcessIntentGetModuleMethodOfExaminationAsync(ITurnContext turnContext, LuisResult luisResult, CancellationToken cancellationToken)

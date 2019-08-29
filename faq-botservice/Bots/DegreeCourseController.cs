@@ -71,6 +71,14 @@ namespace EchoBot.Controllers
             return ids.First();
         }
 
+        public Department GetDepartment(int id)
+        {
+            List<Department> ds = (from d in departments
+                             where d.Id == id
+                             select d).ToList();
+            return ds.First();
+        }
+
         //Modules
         public string getModuleIdFromName(string name)
         {

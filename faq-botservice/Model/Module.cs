@@ -15,5 +15,6 @@ namespace EchoBot.Model
         public string Language { get; set; }
         public List<string> Content { get; set; }
         public string Commissioner { get; set; }
+        public List<string> MethodOfExamination { get; set; }
     }
 }

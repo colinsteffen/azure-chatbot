@@ -1,15 +1,249 @@
 [
   {
+    "Id": 0,
     "Commissioner": "Prof. Dr. Volker Wiemann",
     "Content": [
-      "Einführung in die Kategorien betrieblicher Anwendungssysteme und deren organisatorische Einordnung im Unternehmenskontext",
-      "Fallstudien zur Erarbeitung von folgenden Kompetenzen:"
+      "Einfuehrung in die Kategorien betrieblicher Anwendungssysteme und deren organisatorische Einordnung im Unternehmenskontext",
+      "Fallstudien zur Erarbeitung von verschiedenen Kompetenzen"
     ],
     "CreditPoints": 6,
     "DegreeLevel": "M.Sc.",
     "Duration": "1",
-    "Id": 0,
     "Language": "deutsch",
-    "Title": "Betriebliche Anwendungssysteme"
+    "Title": "Betriebliche Anwendungssysteme",
+    "MethodOfExamination": [
+      "Klausur"
+    ]
+  },
+  {
+    "Id": 1,
+    "Commissioner": "Prof. Dr. Hans Brandt-Pook",
+    "Content": [
+      "E-Business-Konzepte: Teilgebiete, Kategorisierungen",
+      "Digitale Geschaeftsmodelle: Begriff, Formen, systematische Entwicklung, Umsetzungskonzepte, Analyse, Marktpotenziale",
+      "Online-Marketing: SEM, Newsletter, Affiliate Marketing, Social Media Marketing",
+      "Elektronische Maerkte: Klassifikation, Auktionssysteme, Ausschreibungssysteme",
+      "Mobile Business: Technologien, Anwendungen, Marktpotenzial",
+      "Social Intranet: Grundlagen und Systeme"
+    ],
+    "CreditPoints": 6,
+    "DegreeLevel": "M.Sc.",
+    "Duration": "1",
+    "Language": "deutsch",
+    "Title": "Geschaeftsmodelle und -prozesse in der Net-Economy",
+    "MethodOfExamination": [
+      "Projektarbeit",
+      "Hausarbeit"
+    ]
+  },
+  {
+    "Id": 2,
+    "Commissioner": "Prof. Dr. Ulrich Schaefermeier",
+    "Content": [
+      "Aufgaben der Projektleitung",
+      "Agiles vs. traditionelles Projektmanagement",
+      "Projektcontrolling: Fortschritts-, Kosten- und Aufwandsverfolgung; Qualitaetsverfolgung",
+      "Dokumentations- und aenderungsmanagement",
+      "Kommunikation im Rahmen des Change-, Stakeholder- und Risikomanagements",
+      "Projekterfolgsmessung",
+      "Berichtswesen bzw. Projektkommunikation",
+      "Kreativitaetstechniken"
+    ],
+    "CreditPoints": 6,
+    "DegreeLevel": "M.Sc.",
+    "Duration": "1",
+    "Language": "deutsch",
+    "Title": "Management von IT-Projekten",
+    "MethodOfExamination": [
+      "Projektarbeit",
+      "Hausarbeit"
+    ]
+  },
+  {
+    "Id": 3,
+    "Commissioner": "Prof. Dr. Peter Hartel",
+    "Content": [
+      "Wissensmanagement",
+      "Architektur von Business Intelligence-Anwendungen",
+      "Data Warehouse",
+      "Qualitaet von Daten und Bedeutung des ETL-Prozesses",
+      "Multidimensionale Datenmodellierung",
+      "Konzepte der Datenauswertung mit OLAP und Data Mining Verfahren",
+      "Definition, Eigenschaften und technologische Grundlagen von Big Data-Anwendungen, aktuelle Anwendungsszenarien fuer Big Data"
+    ],
+    "CreditPoints": 6,
+    "DegreeLevel": "M.Sc.",
+    "Duration": "1",
+    "Language": "deutsch",
+    "Title": "Datenmanagement",
+    "MethodOfExamination": [
+      "Praesentation"
+    ]
+  },
+  {
+    "Id": 4,
+    "Commissioner": "Prof. Dr. Juergen Schneider",
+    "Content": [
+      "Durchfuehrung eines computergestuetzten Planspiels",
+      "Themen wie Produkt- und Marktentwicklung, Umfeldanalysen, Konkurrenzbeobachtung, Mitarbeiterfuehrung, Produktionssteuerung, Finanzierung, Investition und Rechnungswesen"
+    ],
+    "CreditPoints": 6,
+    "DegreeLevel": "M.Sc.",
+    "Duration": "1",
+    "Language": "deutsch",
+    "Title": "Unternehmenssimulation",
+    "MethodOfExamination": [
+      "Projektarbeit oder Klausur"
+    ]
+  },
+  {
+    "Id": 5,
+    "Commissioner": "Prof. Dr. Alexander Foerster",
+    "Content": [
+      "Zielsysteme und Stakeholder",
+      "Konstitutive Entscheidungen (Unternehmensformen, Standortfaktoren etc.)",
+      "Aufbau- und ablauforganisatorische Grundkonzepte",
+      "Consulting-Tools und Frameworks (Portfolio-Analysen, Porters Five Forces, SWOT, etc.)",
+      "Grundlagen des IT-Consultings einschl. grundlegender Rahmenkonzepte wie CobiT, ITIL etc.",
+      "Strategische Entscheidungen",
+      "Durchfuehrung von Consulting-Projekten (grundlegender Ablauf, Durchfuehrung von Interviews und Workshops Analyse, Ergebnisgestaltung, Umsetzungsmanagement)"
+    ],
+    "CreditPoints": 6,
+    "DegreeLevel": "M.Sc.",
+    "Duration": "1",
+    "Language": "deutsch",
+    "Title": "Consulting und Strategisches Management",
+    "MethodOfExamination": [
+      "Muendliche Pruefung"
+    ]
+  },
+  {
+    "Id": 6,
+    "Commissioner": "Prof. Dr. Jochen Kuester",
+    "Content": [
+      "Geschaeftsprozesse und ihre Bedeutung im Unternehmen",
+      "Modellierung von Geschaeftsprozessen mit BPMN",
+      "Best Practice-Beispiele fuer BPMN",
+      "Objektlebenszyklen und Geschaeftsregeln und ihre Modellierung",
+      "Optimierung und Simulation von Prozessen im betrieblichen Umfeld",
+      "Implementierung von Prozessen mit BPM-Werkzeugen",
+      "Aktuelle Entwicklungen im Bereich BPM",
+      "IT-Unternehmensarchitektur: Definition und Auspraegungen",
+      "Realisierung von Services mit unterschiedlichen Technologien",
+      "Entwicklung von SOA-Systemen mit Java Technologien",
+      "Zusammenhang zwischen Geschaeftsprozessen und IT-Unternehmensarchitektur"
+    ],
+    "CreditPoints": 6,
+    "DegreeLevel": "M.Sc.",
+    "Duration": "1",
+    "Language": "deutsch",
+    "Title": "Geschaeftsprozessmanagement",
+    "MethodOfExamination": [
+      "Klausur"
+    ]
+  },
+  {
+    "Id": 7,
+    "Commissioner": "Prof. Dr. Ulrich Schaefermeier",
+    "Content": [
+      "Elemente des Lebenszyklus des ITSM",
+      "ITIL und ISO/IEC 20000 in der jeweils aktuellen Version",
+      "Pragmatische Einfuehrungen und Ausgestaltungen des ITSM im praktischen Kontext",
+      "Systematische Umsetzung im Rahmen einer ITSM-Governance-Struktur",
+      "Umsetzung in verschiedenen Szenarien: IT-Dienstleister, konsumieren von Cloud-Anwendungen, IT-Nutzung in KMU etc."
+    ],
+    "CreditPoints": 6,
+    "DegreeLevel": "M.Sc.",
+    "Duration": "1",
+    "Language": "deutsch",
+    "Title": "IT-Service-Management",
+    "MethodOfExamination": [
+      "Projektarbeit",
+      "Hausarbeit"
+    ]
+  },
+  {
+    "Id": 8,
+    "Commissioner": "Prof. Dr. Hans Brandt-Pook",
+    "Content": [
+      "aktuelle Themen ueber das gesamte Spektrum der Wirtschaftsinformatik"
+    ],
+    "CreditPoints": 12,
+    "DegreeLevel": "M.Sc.",
+    "Duration": "1",
+    "Language": "deutsch",
+    "Title": "Forschungsseminar zur Wirtschaftsinformatik",
+    "MethodOfExamination": [
+      "Fachvortrag",
+      "Hausarbeit"
+    ]
+  },
+  {
+    "Id": 9,
+    "Commissioner": "Prof. Dr. Hans Brandt-Pook",
+    "Content": [
+      "umfangreiche Projektaufgabe"
+    ],
+    "CreditPoints": 18,
+    "DegreeLevel": "M.Sc.",
+    "Duration": "1",
+    "Language": "deutsch",
+    "Title": "Master-Projekt zur Wirtschaftsinformatik",
+    "MethodOfExamination": [
+      "Projektarbeit",
+      "muendliche Pruefung"
+    ]
+  },
+  {
+    "Id": 10,
+    "Commissioner": "Prof. Dr. Joerg-Michael Keuntje",
+    "Content": [
+      "Verschiedene Themenkomplexe in der IT-Sicherheit"
+    ],
+    "CreditPoints": 6,
+    "DegreeLevel": "M.Sc.",
+    "Duration": "1",
+    "Language": "deutsch",
+    "Title": "IT-Governance, -Compliance und -Security",
+    "MethodOfExamination": [
+      "Schriftliche Ausarbeitung",
+      "Praesentation"
+    ]
+  },
+  {
+    "Id": 11,
+    "Commissioner": "Prof. Dr. Axel Benning",
+    "Content": [
+      "Allgemeines Vertragsrecht",
+      "Recht des elektronischen Geschaeftsverkehrs",
+      "gewerblicher Rechtsschutz und Urheberrecht; Wettbewerbsrecht; Recht des Datenschutzes",
+      "Kommunikationsrecht (Telemediengesetz, Telekommunikationsgesetz)",
+      "Internationales Internetrecht einschließlich Internationales Privatrecht",
+      "Strafrecht im Bereich der Informationstechnologie"
+    ],
+    "CreditPoints": 6,
+    "DegreeLevel": "M.Sc.",
+    "Duration": "1",
+    "Language": "deutsch",
+    "Title": "IT-Recht",
+    "MethodOfExamination": [
+      "Klausur"
+    ]
+  },
+  {
+    "Id": 12,
+    "Commissioner": "Prof. Dr. Hans Brandt-Pook",
+    "Content": [
+      "selbststaendige und praktische Anwendung sowie die kritische Reflexion zuvor im Studium gelernter Methoden und Inhalte"
+    ],
+    "CreditPoints": 30,
+    "DegreeLevel": "M.Sc.",
+    "Duration": "1",
+    "Language": "deutsch",
+    "Title": "Masterthesis und Kolloquium",
+    "MethodOfExamination": [
+      "Abschlussarbeit (Masterthsis)",
+      "Kolloquium"
+    ]
   }
 ]
