@@ -24,6 +24,8 @@ namespace EchoBot.Helper
         //Courses Intents
         public const string INTENT_COURSES = "getCourses";
         public const string INTENT_COURSES_COURSES_ALL = "getCourses";
+        public const string INTENT_COURSES_COURSE = "getCourse";
+        public const string INTENT_COURSES_MODULES = "getModules";
         public const string INTENT_COURSES_MODULE_COMMISSIONER = "getModuleCommissioner";
         public const string INTENT_COURSES_MODULE_CONTENT = "getModuleContent";
         public const string INTENT_COURSES_MODULE_INFORMATION = "getModuleInformation";

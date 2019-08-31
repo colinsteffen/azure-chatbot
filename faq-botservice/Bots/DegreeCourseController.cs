@@ -54,12 +54,37 @@ namespace EchoBot.Controllers
             return degreeCoursesFiltered;
         }
 
-        public int GetDegreeCourseIdFromName(string name)
+        public List<int> GetDegreeCourseIdsFromName(string name, string studyModel, string degreeLevel)
         {
-            List<int> ids = (from dc in degreeCourses
-                             where name.Equals(dc.Title)
+            List<DegreeCourse> dcs = (from dc in degreeCourses
+                             where name.ToLower().Equals(dc.Title.ToLower())
+                             select dc).ToList();
+
+            if(!string.IsNullOrEmpty(studyModel))
+            {
+                dcs = (from dc in dcs
+                      where studyModel.ToLower().Equals(dc.StudyModel.ToLower())
+                      select dc).ToList();
+            }
+
+            if (!string.IsNullOrEmpty(degreeLevel))
+            {
+                dcs = (from dc in dcs
+                       where degreeLevel.ToLower().Equals(dc.DegreeLevel.ToLower())
+                       select dc).ToList();
+            }
+
+            List<int> ids = (from dc in dcs
                              select dc.Id).ToList();
-            return ids.First();
+            return ids;
+        }
+
+        public DegreeCourse GetDegreeCourse(int id)
+        {
+            List<DegreeCourse> dc = (from d in degreeCourses
+                                   where d.Id == id
+                                   select d).ToList();
+            return dc.First();
         }
 
         //Department

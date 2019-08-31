@@ -15,7 +15,7 @@ namespace EchoBot.Model
         public int DurationOfStudy { get; set; }
         public int DepartmentId { get; set; }
         public int PlaceOfStudyId { get; set; }
-        public List<int> ModuleIds { get; set; }
+        public List<string> ModuleIds { get; set; }
         public string Title { get; set; }
         public bool NumerusClausus { get; set; }
     }

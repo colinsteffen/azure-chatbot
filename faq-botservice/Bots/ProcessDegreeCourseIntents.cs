@@ -45,8 +45,10 @@ namespace EchoBot.Bots
                 await ProcessIntentGetModuleInformationAsync(turnContext, null, cancellationToken);
             else if (StateHelper.DegreeCourseIntent.WaitingMethod.Equals("ProcessIntentGetModuleLanguageAsync"))
                 await ProcessIntentGetModuleLanguageAsync(turnContext, null, cancellationToken);
-            else if (StateHelper.DegreeCourseIntent.WaitingMethod.Equals("ProcessIntentGetModuleLanguageAsync"))
-                await ProcessIntentGetModuleLanguageAsync(turnContext, null, cancellationToken);
+            else if (StateHelper.DegreeCourseIntent.WaitingMethod.Equals("ProcessIntentGetCourseAsync"))
+                await ProcessIntentGetCourseAsync(turnContext, null, cancellationToken);
+            else if (StateHelper.DegreeCourseIntent.WaitingMethod.Equals("ProcessIntentGetModulesAsync"))
+                await ProcessIntentGetModulesAsync(turnContext, null, cancellationToken);
         }
 
         public async Task SetToNotWaiting()
@@ -76,6 +78,127 @@ namespace EchoBot.Bots
                     List<DegreeCourse> degreeCoursesFiltered = degreeCourseController.GetFilteredDegreeCourses(StateHelper.DegreeCourseIntent.LastDepartmentId, StateHelper.DegreeCourseIntent.LastDegreeLevel);
                     await turnContext.SendActivityAsync(MessageFactory.Text(DegreeCourseIntentDialogs.DialogGetDegreeCourses(degreeCoursesFiltered)), cancellationToken);
                 }
+            }
+        }
+
+        public async Task ProcessIntentGetCourseAsync(ITurnContext turnContext, LuisResult luisResult, CancellationToken cancellationToken)
+        {
+            _logger.LogInformation("ProcessIntentGetCourseAsync");
+
+            if (StateHelper.DegreeCourseIntent.WaitingForInformation)
+            {
+                if(StateHelper.DegreeCourseIntent.WaitingVariable.Equals("StudyModel")) StateHelper.DegreeCourseIntent.LastStudyModel = turnContext.Activity.Text;
+                else if(StateHelper.DegreeCourseIntent.WaitingVariable.Equals("DegreeLevel")) StateHelper.DegreeCourseIntent.LastDegreeLevel = turnContext.Activity.Text;
+
+                await SetToNotWaiting();
+            }
+
+            if (luisResult != null)
+            {
+                if (luisResult.ConnectedServiceResult.Entities.Count() > 0)
+                {
+                    foreach (EntityModel em in luisResult.ConnectedServiceResult.Entities)
+                    {
+                        if (EntityHelper.ENTITY_STUDY_MODEL.Equals(em.Type)) StateHelper.DegreeCourseIntent.LastStudyModel = em.Entity;
+                        if (EntityHelper.ENTITY_DEGREE.Equals(em.Type)) StateHelper.DegreeCourseIntent.LastDegreeLevel = em.Entity;
+                        if (EntityHelper.ENTITY_COURSE.Equals(em.Type)) StateHelper.DegreeCourseIntent.LastDegreeCourseTitle = em.Entity;
+                    }
+                }
+            }
+
+            List<int> dcIds = degreeCourseController.GetDegreeCourseIdsFromName(StateHelper.DegreeCourseIntent.LastDegreeCourseTitle, StateHelper.DegreeCourseIntent.LastStudyModel, StateHelper.DegreeCourseIntent.LastDegreeLevel);
+            if (dcIds.Count > 1)
+            {
+                if (string.IsNullOrEmpty(StateHelper.DegreeCourseIntent.LastDegreeLevel))
+                {
+                    StateHelper.DegreeCourseIntent.WaitingForInformation = true;
+                    StateHelper.DegreeCourseIntent.WaitingVariable = "DegreeLevel";
+                    StateHelper.DegreeCourseIntent.WaitingMethod = "ProcessIntentGetCourseAsync";
+
+                    await turnContext.SendActivityAsync(MessageFactory.Text($"Nach welchem Studienabschluss suchen Sie? \n\n (Master oder Bachelor)"), cancellationToken);
+                }
+                else if (string.IsNullOrEmpty(StateHelper.DegreeCourseIntent.LastStudyModel))
+                {
+                    StateHelper.DegreeCourseIntent.WaitingForInformation = true;
+                    StateHelper.DegreeCourseIntent.WaitingVariable = "StudyModel";
+                    StateHelper.DegreeCourseIntent.WaitingMethod = "ProcessIntentGetCourseAsync";
+
+                    await turnContext.SendActivityAsync(MessageFactory.Text($"Nach welchem Studienmodell suchen Sie? \n\n (Vollzeitstudiengang, praxisintegrierter Studiengang oder Verbundstudiengang (berufsbegleitend))"), cancellationToken);
+                }
+            } 
+            else StateHelper.DegreeCourseIntent.LastDegreeCourseId = dcIds.First();
+
+            if (!StateHelper.DegreeCourseIntent.WaitingForInformation)
+            {
+                DegreeCourse searchedDegreeCourse = degreeCourseController.GetDegreeCourse(StateHelper.DegreeCourseIntent.LastDegreeCourseId);
+                string text = $"Ich konnte die folgenden Informationen zu dem Studiengang {searchedDegreeCourse.Title} finden:";
+                text += $"\n- Studienmodell: {searchedDegreeCourse.StudyModel}";
+                text += $"\n- Studiendauer: {searchedDegreeCourse.DurationOfStudy}";
+                text += $"\n- Abschluss: {searchedDegreeCourse.DegreeLevel}";
+                if(searchedDegreeCourse.NumerusClausus) text += $"\n- Numerus Clausus: ja";
+                else text += $"\n- Numerus Clausus: nein";
+                await turnContext.SendActivityAsync(MessageFactory.Text(text), cancellationToken);
+            }
+        }
+
+        public async Task ProcessIntentGetModulesAsync(ITurnContext turnContext, LuisResult luisResult, CancellationToken cancellationToken)
+        {
+            _logger.LogInformation("ProcessIntentGetModulesAsync");
+
+            if (StateHelper.DegreeCourseIntent.WaitingForInformation)
+            {
+                if (StateHelper.DegreeCourseIntent.WaitingVariable.Equals("StudyModel")) StateHelper.DegreeCourseIntent.LastStudyModel = turnContext.Activity.Text;
+                else if (StateHelper.DegreeCourseIntent.WaitingVariable.Equals("DegreeLevel")) StateHelper.DegreeCourseIntent.LastDegreeLevel = turnContext.Activity.Text;
+
+                await SetToNotWaiting();
+            }
+
+            if (luisResult != null)
+            {
+                if (luisResult.ConnectedServiceResult.Entities.Count() > 0)
+                {
+                    foreach (EntityModel em in luisResult.ConnectedServiceResult.Entities)
+                    {
+                        if (EntityHelper.ENTITY_STUDY_MODEL.Equals(em.Type)) StateHelper.DegreeCourseIntent.LastStudyModel = em.Entity;
+                        if (EntityHelper.ENTITY_DEGREE.Equals(em.Type)) StateHelper.DegreeCourseIntent.LastDegreeLevel = em.Entity;
+                        if (EntityHelper.ENTITY_COURSE.Equals(em.Type)) StateHelper.DegreeCourseIntent.LastDegreeCourseTitle = em.Entity;
+                    }
+                }
+            }
+
+            List<int> dcIds = degreeCourseController.GetDegreeCourseIdsFromName(StateHelper.DegreeCourseIntent.LastDegreeCourseTitle, StateHelper.DegreeCourseIntent.LastStudyModel, StateHelper.DegreeCourseIntent.LastDegreeLevel);
+            if (dcIds.Count > 1)
+            {
+                if (string.IsNullOrEmpty(StateHelper.DegreeCourseIntent.LastDegreeLevel))
+                {
+                    StateHelper.DegreeCourseIntent.WaitingForInformation = true;
+                    StateHelper.DegreeCourseIntent.WaitingVariable = "DegreeLevel";
+                    StateHelper.DegreeCourseIntent.WaitingMethod = "ProcessIntentGetModulesAsync";
+
+                    await turnContext.SendActivityAsync(MessageFactory.Text($"Nach welchem Studienabschluss suchen Sie? \n\n (Master oder Bachelor)"), cancellationToken);
+                }
+                else if (string.IsNullOrEmpty(StateHelper.DegreeCourseIntent.LastStudyModel))
+                {
+                    StateHelper.DegreeCourseIntent.WaitingForInformation = true;
+                    StateHelper.DegreeCourseIntent.WaitingVariable = "StudyModel";
+                    StateHelper.DegreeCourseIntent.WaitingMethod = "ProcessIntentGetModulesAsync";
+
+                    await turnContext.SendActivityAsync(MessageFactory.Text($"Nach welchem Studienmodell suchen Sie? \n\n (Vollzeitstudiengang, praxisintegrierter Studiengang oder Verbundstudiengang (berufsbegleitend))"), cancellationToken);
+                }
+            }
+            else StateHelper.DegreeCourseIntent.LastDegreeCourseId = dcIds.First();
+
+            if (!StateHelper.DegreeCourseIntent.WaitingForInformation)
+            {
+                DegreeCourse searchedDegreeCourse = degreeCourseController.GetDegreeCourse(StateHelper.DegreeCourseIntent.LastDegreeCourseId);
+
+                string text = $"Ich konnte die folgenden Module zu dem Studiengang {searchedDegreeCourse.Title} finden:";
+                foreach(string id in searchedDegreeCourse.ModuleIds)
+                {
+                    Module m = degreeCourseController.getModule(id);
+                    text += $"\n-{m.Title}";
+                }
+                await turnContext.SendActivityAsync(MessageFactory.Text(text), cancellationToken);
             }
         }
 

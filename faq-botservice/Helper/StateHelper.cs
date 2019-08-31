@@ -14,9 +14,11 @@ namespace EchoBot.Helper
             public static string WaitingVariable = "";
 
             public static string LastModuleId = "";
+            public static string LastDegreeCourseTitle = "";
             public static int LastDegreeCourseId = -1;
             public static int LastDepartmentId = -1;
             public static string LastDegreeLevel = "";
+            public static string LastStudyModel = "";
         }
     }
 }

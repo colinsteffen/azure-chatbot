@@ -172,6 +172,10 @@ namespace EchoBot.Bots
                 await processDegreeCourseIntents.ProcessIntentGetModuleLanguageAsync(turnContext, luisResult, cancellationToken);
             else if (IntentHelper.INTENT_COURSES_METHOD_OF_EXAMINATION.Equals(topIntent))
                 await processDegreeCourseIntents.ProcessIntentGetModuleMethodOfExaminationAsync(turnContext, luisResult, cancellationToken);
+            else if (IntentHelper.INTENT_COURSES_COURSE.Equals(topIntent))
+                await processDegreeCourseIntents.ProcessIntentGetCourseAsync(turnContext, luisResult, cancellationToken);
+            else if (IntentHelper.INTENT_COURSES_MODULES.Equals(topIntent))
+                await processDegreeCourseIntents.ProcessIntentGetModulesAsync(turnContext, luisResult, cancellationToken);
         }
     }
 }
