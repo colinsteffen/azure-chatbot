@@ -132,11 +132,11 @@ namespace FAQBot.Bots
             {
                 DegreeCourse searchedDegreeCourse = degreeCourseController.GetDegreeCourse(StateHelper.DegreeCourseIntent.LastDegreeCourseId);
                 string text = $"Ich konnte die folgenden Informationen zu dem Studiengang {searchedDegreeCourse.Title} finden:";
-                text += $"\n- Studienmodell: {searchedDegreeCourse.StudyModel}";
-                text += $"\n- Studiendauer: {searchedDegreeCourse.DurationOfStudy}";
-                text += $"\n- Abschluss: {searchedDegreeCourse.DegreeLevel}";
+                text += $"\n\n- Studienmodell: {searchedDegreeCourse.StudyModel}";
+                text += $"\n\n- Studiendauer: {searchedDegreeCourse.DurationOfStudy}";
+                text += $"\n\n- Abschluss: {searchedDegreeCourse.DegreeLevel}";
                 if(searchedDegreeCourse.NumerusClausus) text += $"\n- Numerus Clausus: ja";
-                else text += $"\n- Numerus Clausus: nein";
+                else text += $"\n\n- Numerus Clausus: nein";
                 await turnContext.SendActivityAsync(MessageFactory.Text(text), cancellationToken);
             }
         }
@@ -196,7 +196,7 @@ namespace FAQBot.Bots
                 foreach(string id in searchedDegreeCourse.ModuleIds)
                 {
                     Module m = degreeCourseController.getModule(id);
-                    text += $"\n-{m.Title}";
+                    text += $"\n\n-{m.Title}";
                 }
                 await turnContext.SendActivityAsync(MessageFactory.Text(text), cancellationToken);
             }
@@ -315,12 +315,12 @@ namespace FAQBot.Bots
             {
                 Module searchedModule = degreeCourseController.getModule(StateHelper.DegreeCourseIntent.LastModuleId);
                 string text = $"Ich habe folgende Informationen zu dem Modul {searchedModule.Title} gefunden:";
-                text += $"\n-Beauftragter: {searchedModule.Commissioner}";
-                text += $"\n-Abschluss: {searchedModule.DegreeLevel}";
-                text += $"\n-Credit Points: {searchedModule.CreditPoints}";
-                text += $"\n-Inhalt:";
+                text += $"\n\n-Beauftragter: {searchedModule.Commissioner}";
+                text += $"\n\n-Abschluss: {searchedModule.DegreeLevel}";
+                text += $"\n\n-Credit Points: {searchedModule.CreditPoints}";
+                text += $"\n\n-Inhalt:";
                 foreach (string s in searchedModule.Content)
-                    text += $"\n-{s}";
+                    text += $"\n\n-{s}";
                 await turnContext.SendActivityAsync(MessageFactory.Text(text), cancellationToken);
             }
         }
