@@ -1,7 +1,7 @@
 [
   {
     "Id": 0,
-    "Commissioner": "Prof. Dr. Max Mustermann",
+    "Commissioner": "Prof. Dr. Volker Wiemann",
     "Content": [
       "Einfuehrung in die Kategorien betrieblicher Anwendungssysteme und deren organisatorische Einordnung im Unternehmenskontext",
       "Fallstudien zur Erarbeitung von verschiedenen Kompetenzen"
@@ -17,7 +17,7 @@
   },
   {
     "Id": 1,
-    "Commissioner": "Prof. Dr. Max Mustermann",
+    "Commissioner": "Prof. Dr. Hans Brandt-Pook",
     "Content": [
       "E-Business-Konzepte: Teilgebiete, Kategorisierungen",
       "Digitale Geschaeftsmodelle: Begriff, Formen, systematische Entwicklung, Umsetzungskonzepte, Analyse, Marktpotenziale",
@@ -38,7 +38,7 @@
   },
   {
     "Id": 2,
-    "Commissioner": "Prof. Dr. Max Mustermann",
+    "Commissioner": "Prof. Dr. Ulrich Schaefermeier",
     "Content": [
       "Aufgaben der Projektleitung",
       "Agiles vs. traditionelles Projektmanagement",
@@ -61,7 +61,7 @@
   },
   {
     "Id": 3,
-    "Commissioner": "Prof. Dr. Max Mustermann",
+    "Commissioner": "Prof. Dr. Peter Hartel",
     "Content": [
       "Wissensmanagement",
       "Architektur von Business Intelligence-Anwendungen",
@@ -82,7 +82,7 @@
   },
   {
     "Id": 4,
-    "Commissioner": "Prof. Dr. Max Mustermann",
+    "Commissioner": "Prof. Dr. Juergen Schneider",
     "Content": [
       "Durchfuehrung eines computergestuetzten Planspiels",
       "Themen wie Produkt- und Marktentwicklung, Umfeldanalysen, Konkurrenzbeobachtung, Mitarbeiterfuehrung, Produktionssteuerung, Finanzierung, Investition und Rechnungswesen"
@@ -98,7 +98,7 @@
   },
   {
     "Id": 5,
-    "Commissioner": "Prof. Dr. Max Mustermann",
+    "Commissioner": "Prof. Dr. Alexander Foerster",
     "Content": [
       "Zielsysteme und Stakeholder",
       "Konstitutive Entscheidungen (Unternehmensformen, Standortfaktoren etc.)",
@@ -119,7 +119,7 @@
   },
   {
     "Id": 6,
-    "Commissioner": "Prof. Dr. Max Mustermann",
+    "Commissioner": "Prof. Dr. Jochen Kuester",
     "Content": [
       "Geschaeftsprozesse und ihre Bedeutung im Unternehmen",
       "Modellierung von Geschaeftsprozessen mit BPMN",
@@ -144,7 +144,7 @@
   },
   {
     "Id": 7,
-    "Commissioner": "Prof. Dr. Max Mustermann",
+    "Commissioner": "Prof. Dr. Ulrich Schaefermeier",
     "Content": [
       "Elemente des Lebenszyklus des ITSM",
       "ITIL und ISO/IEC 20000 in der jeweils aktuellen Version",
@@ -164,7 +164,7 @@
   },
   {
     "Id": 8,
-    "Commissioner": "Prof. Dr. Max Mustermann",
+    "Commissioner": "Prof. Dr. Hans Brandt-Pook",
     "Content": [
       "aktuelle Themen ueber das gesamte Spektrum der Wirtschaftsinformatik"
     ],
@@ -180,7 +180,7 @@
   },
   {
     "Id": 9,
-    "Commissioner": "Prof. Dr. Max Mustermann",
+    "Commissioner": "Prof. Dr. Hans Brandt-Pook",
     "Content": [
       "umfangreiche Projektaufgabe"
     ],
@@ -196,7 +196,7 @@
   },
   {
     "Id": 10,
-    "Commissioner": "Prof. Dr. Max Mustermann",
+    "Commissioner": "Prof. Dr. Joerg-Michael Keuntje",
     "Content": [
       "Verschiedene Themenkomplexe in der IT-Sicherheit"
     ],
@@ -212,7 +212,7 @@
   },
   {
     "Id": 11,
-    "Commissioner": "Prof. Dr. Max Mustermann",
+    "Commissioner": "Prof. Dr. Axel Benning",
     "Content": [
       "Allgemeines Vertragsrecht",
       "Recht des elektronischen Geschaeftsverkehrs",
@@ -232,7 +232,7 @@
   },
   {
     "Id": 12,
-    "Commissioner": "Prof. Dr. Max Mustermann",
+    "Commissioner": "Prof. Dr. Hans Brandt-Pook",
     "Content": [
       "selbststaendige und praktische Anwendung sowie die kritische Reflexion zuvor im Studium gelernter Methoden und Inhalte"
     ],

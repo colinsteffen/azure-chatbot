@@ -1,11 +1,11 @@
-﻿using EchoBot.Model;
-using EchoBot.Services;
+﻿using FAQBot.Model;
+using FAQBot.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace EchoBot.Controllers
+namespace FAQBot.Controllers
 {
     public class EventController
     {

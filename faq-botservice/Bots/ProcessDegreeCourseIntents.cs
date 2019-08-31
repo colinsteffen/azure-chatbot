@@ -1,7 +1,7 @@
-﻿using EchoBot.Controllers;
-using EchoBot.Dialogs;
-using EchoBot.Helper;
-using EchoBot.Model;
+﻿using FAQBot.Controllers;
+using FAQBot.Dialogs;
+using FAQBot.Helper;
+using FAQBot.Model;
 using Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime.Models;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
@@ -12,7 +12,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace EchoBot.Bots
+namespace FAQBot.Bots
 {
     public class ProcessDegreeCourseIntents
     {

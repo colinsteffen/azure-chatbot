@@ -1,11 +1,11 @@
-﻿using EchoBot.Model;
-using EchoBot.Repository;
+﻿using FAQBot.Model;
+using FAQBot.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace EchoBot.Controllers
+namespace FAQBot.Controllers
 {
     public class DegreeCourseController
     {

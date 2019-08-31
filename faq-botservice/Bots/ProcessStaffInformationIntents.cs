@@ -1,4 +1,4 @@
-﻿using EchoBot.Controllers;
+﻿using FAQBot.Controllers;
 using Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime.Models;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Schema;
@@ -8,9 +8,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using EchoBot.Helper;
+using FAQBot.Helper;
 
-namespace EchoBot.Bots
+namespace FAQBot.Bots
 {
     public class ProcessStaffInformationIntents
     {

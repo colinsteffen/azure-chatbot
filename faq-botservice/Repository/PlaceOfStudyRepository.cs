@@ -1,4 +1,4 @@
-﻿using EchoBot.Model;
+﻿using FAQBot.Model;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -6,7 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace EchoBot.Repository
+namespace FAQBot.Repository
 {
     public class PlaceOfStudyRepository : IPlaceOfStudyRepository
     {

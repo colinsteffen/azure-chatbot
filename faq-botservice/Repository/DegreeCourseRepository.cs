@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using EchoBot.Model;
+using FAQBot.Model;
 using Newtonsoft.Json;
 
-namespace EchoBot.Repository
+namespace FAQBot.Repository
 {
     public class DegreeCourseRepository : IDegreeCourseRepository
     {

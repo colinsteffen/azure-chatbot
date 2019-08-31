@@ -1,11 +1,11 @@
-﻿using EchoBot.Controllers;
+﻿using FAQBot.Controllers;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace EchoBot.Bots
+namespace FAQBot.Bots
 {
     public class ProcessEventIntents
     {

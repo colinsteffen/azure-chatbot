@@ -9,12 +9,12 @@ using Microsoft.Bot.Schema;
 using System.Linq;
 using Microsoft.Extensions.Logging;
 using Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime.Models;
-using EchoBot.Helper;
+using FAQBot.Helper;
 using Microsoft.Bot.Builder.Dialogs;
 
-namespace EchoBot.Bots
+namespace FAQBot.Bots
 {
-    public class EchoBot<T> : ActivityHandler where T : Dialog
+    public class FAQBot<T> : ActivityHandler where T : Dialog
     {
         private ProcessStaffInformationIntents processStaffInformationIntents;
         private ProcessDegreeCourseIntents processDegreeCourseIntents;
@@ -26,7 +26,7 @@ namespace EchoBot.Bots
         protected readonly ILogger Logger;
         private IBotServices _botServices;
 
-        public EchoBot(IBotServices botServices, ConversationState conversationState, UserState userState, T dialog, ILogger<EchoBot<T>> logger)
+        public FAQBot(IBotServices botServices, ConversationState conversationState, UserState userState, T dialog, ILogger<FAQBot<T>> logger)
         {
             Logger = logger;
             _botServices = botServices;

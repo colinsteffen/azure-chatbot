@@ -1,4 +1,4 @@
-﻿using EchoBot.Model;
+﻿using FAQBot.Model;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.Dialogs.Choices;
@@ -9,7 +9,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace EchoBot.Dialogs
+namespace FAQBot.Dialogs
 {
     public class ModuleDialog : ComponentDialog
     {

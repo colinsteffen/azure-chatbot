@@ -1,10 +1,10 @@
-﻿using EchoBot.Model;
+﻿using FAQBot.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace EchoBot.Dialogs
+namespace FAQBot.Dialogs
 {
     public static class DegreeCourseIntentDialogs
     {

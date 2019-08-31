@@ -9,8 +9,8 @@ using Microsoft.Bot.Builder.Integration.AspNet.Core;
 using Microsoft.Bot.Connector.Authentication;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using EchoBot;
-using EchoBot.Dialogs;
+using FAQBot;
+using FAQBot.Dialogs;
 
 namespace Microsoft.BotBuilderSamples
 {
@@ -55,7 +55,7 @@ namespace Microsoft.BotBuilderSamples
             services.AddSingleton<ModuleDialog>();
 
             // Create the bot as a transient. In this case the ASP Controller is expecting an IBot.
-            services.AddTransient<IBot, EchoBot.Bots.EchoBot<ModuleDialog>>();
+            services.AddTransient<IBot, FAQBot.Bots.FAQBot<ModuleDialog>>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

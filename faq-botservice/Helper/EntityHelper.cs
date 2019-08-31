@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace EchoBot.Helper
+namespace FAQBot.Helper
 {
     public static class EntityHelper
     {
