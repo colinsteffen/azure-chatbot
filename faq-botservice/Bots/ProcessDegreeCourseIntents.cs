@@ -256,7 +256,7 @@ namespace EchoBot.Bots
                     foreach (EntityModel em in luisResult.ConnectedServiceResult.Entities)
                     {
                         if (EntityHelper.ENTITY_MODULE.Equals(em.Type))
-                            StateHelper.DegreeCourseIntent.LastModuleId = degreeCourseController.getModuleIdFromName(em.Entity);
+                            StateHelper.DegreeCourseIntent.LastModuleId = degreeCourseController.getModuleIdFromName(TextFormatHelper.RemoveWhitespaceBeforeAfterHyphen(em.Entity));
                     }
                 }
 
@@ -297,7 +297,7 @@ namespace EchoBot.Bots
                     foreach (EntityModel em in luisResult.ConnectedServiceResult.Entities)
                     {
                         if (EntityHelper.ENTITY_MODULE.Equals(em.Type))
-                            StateHelper.DegreeCourseIntent.LastModuleId = degreeCourseController.getModuleIdFromName(em.Entity);
+                            StateHelper.DegreeCourseIntent.LastModuleId = degreeCourseController.getModuleIdFromName(TextFormatHelper.RemoveWhitespaceBeforeAfterHyphen(em.Entity));
                     }
                 }
 
@@ -342,7 +342,7 @@ namespace EchoBot.Bots
                     foreach (EntityModel em in luisResult.ConnectedServiceResult.Entities)
                     {
                         if (EntityHelper.ENTITY_MODULE.Equals(em.Type))
-                            StateHelper.DegreeCourseIntent.LastModuleId = degreeCourseController.getModuleIdFromName(em.Entity);
+                            StateHelper.DegreeCourseIntent.LastModuleId = degreeCourseController.getModuleIdFromName(TextFormatHelper.RemoveWhitespaceBeforeAfterHyphen(em.Entity));
                     }
                 }
 
