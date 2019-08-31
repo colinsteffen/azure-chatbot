@@ -80,9 +80,9 @@ namespace FAQBot.Bots
                 if (member.Id != turnContext.Activity.Recipient.Id)
                     await turnContext.SendActivityAsync(MessageFactory.Text($"Willkommen zum Bot der FH Bielefeld!\n\n" +
                         $"Der Bot beantwortet dir zu folgenden Themen Fragen:" +
-                        $"\n\n-FAQ Fragen" +
-                        $"\n-Informationen aus dem Personenverzeichnis" +
-                        $"\n-Informationen zu Studiengängen sowie zugehörifen Modulen" +
+                        $"\n\n -FAQ Fragen" +
+                        $"\n\n -Informationen aus dem Personenverzeichnis" +
+                        $"\n\n -Informationen zu Studiengängen sowie zugehörigen Modulen" +
                         $"\n\n\n\nWenn du Fragen zu dem Vorgehen hast schreibe 'FAQ', 'Personenverzeichnis' oder 'Studiengänge' um weitere Informationen zu erhalten."), cancellationToken);
             }
         }
